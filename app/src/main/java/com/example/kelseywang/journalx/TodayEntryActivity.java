@@ -17,7 +17,7 @@ public class TodayEntryActivity extends SimpleActivity {
 
     private List<String> questions = new ArrayList<>();
     private Map<Integer, String> dailyQuestions = new HashMap<Integer, String>();
-    private final int START_DAY_OF_YEAR = 29; //should be day which app is launched
+    private final int START_DAY_OF_YEAR = 35; //should be day which app is launched
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
