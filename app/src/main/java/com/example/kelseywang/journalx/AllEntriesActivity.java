@@ -1,10 +1,15 @@
 package com.example.kelseywang.journalx;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import com.amulyakhare.textdrawable.TextDrawable;
 
 import stanford.androidlib.*;
 
@@ -18,6 +23,12 @@ public class AllEntriesActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_entries);
+
+
+        TextDrawable drawable = TextDrawable.builder()
+                .buildRoundRect("A", Color.RED, 10);
+        $IV(R.id.image_view).setImageDrawable(drawable);
+
         setList();
         $LV(R.id.thought_list).setOnItemClickListener(this);
         $LV(R.id.thought_list).setOnItemLongClickListener(this);
@@ -92,7 +103,34 @@ public class AllEntriesActivity extends SimpleActivity {
 
     //Sets list with simplelist
     private void setList() {
-        SimpleList.with(this).setItems(R.id.thought_list, getQuestionsList());
+        //adapted from http://wptrafficanalyzer.in/blog/listview-with-images-and-text-using-simple-adapter-in-android/
+        List<String> questions = getQuestionsList();
+        // Each row in the list stores country name, currency and flag
+        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+
+
+        for(int i = 0; i < questions.size(); i++){
+            HashMap<String, String> hm = new HashMap<String,String>();
+            hm.put("questions", questions.get(i));
+            hm.put("icon", Integer.toString(R.drawable.notebook));
+            aList.add(hm);
+        }
+        // Keys used in Hashmap
+        String[] from = {"icon", "questions"};
+
+        // Ids of views in listview_layout
+        int[] to = {R.id.image_view, R.id.both_questions};
+
+        // Instantiating an adapter to store each items
+        // R.layout.list_elements defines the layout of each item
+        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_element, from, to);
+
+        // Setting the adapter to the listView
+        $LV(R.id.thought_list).setAdapter(adapter);
+
+
+
+        //SimpleList.with(this).setItems(R.id.thought_list, getQuestionsList());
     }
 
     //Deletes items when thoughts are long clicked

@@ -1,50 +1,38 @@
 package com.example.kelseywang.journalx;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.auth.FirebaseAuth;
 import stanford.androidlib.*;
-
 import java.io.PrintStream;
 import java.util.*;
-import java.text.*;
-
 
 public class TodayEntryActivity extends SimpleActivity {
+    public static final String FIREBASE_USERNAME = "yeslek08@gmail.com";
+    public static final String FIREBASE_PASSWORD = "yeslek";
+    private FirebaseAuth mAuth;
     private String test = "a";
     private List<String> questions = new ArrayList<>();
     private Map<Integer, String> dailyQuestions = new HashMap<Integer, String>();
-    private final int START_DAY_OF_YEAR = 61; //should be day which app is launched
+    private final int START_DAY_OF_YEAR = 60; //should be day which app is launched
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_entry);
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(FIREBASE_USERNAME, FIREBASE_PASSWORD);
+
         setDate();
-        populateQuestionsArray();
         populateQuestionsMap();
         setQuestions();
-
-    }
-
-    //TODO: put this into the Strings file since this is predetermined
-    private void populateQuestionsArray() {
-        //List<String> questions = new ArrayList<>();
-        questions.addAll(Arrays.asList("q1", "q2", "q3", "q4", "q5",
-                "q6", "q7", "q8", "q9", "q10",
-                "q11", "q12", "q13", "q14", "q15",
-                "q16", "q17", "q18", "q19", "q20",
-                "q21", "q22", "q23", "q24", "q25",
-                "q26", "q27", "q28", "q29", "q30"));
     }
 
     private int[] calendarDates() {
@@ -67,19 +55,13 @@ public class TodayEntryActivity extends SimpleActivity {
 
         final DatabaseReference fb = FirebaseDatabase
                 .getInstance().getReference();
-        final DatabaseReference today1 = fb.child(Integer.toString(day - START_DAY_OF_YEAR));
-        final DatabaseReference today2 = fb.child(Integer.toString(day + 1000 - START_DAY_OF_YEAR));
+        DatabaseReference fbQuestionsToday = fb.child("questions").child(Integer.toString(day - START_DAY_OF_YEAR));
+        final DatabaseReference today1 = fbQuestionsToday.child("Q1");
+        final DatabaseReference today2 = fbQuestionsToday.child("Q2");
         today1.addValueEventListener(new ValueEventListener() {
              @Override
              public void onDataChange (DataSnapshot data) {
                  String todayQ1 = (String) data.getValue();
-                 if(data.getValue() != null) {
-                     Log.d("dataVALUE", todayQ1);
-                 }
-                 else {
-                     Log.d("dataVALUENOT", test);
-
-                 }
                  handleOpenedToday(todayQ1);
                  $TV(R.id.question_1).setText(todayQ1);
              }
@@ -87,9 +69,8 @@ public class TodayEntryActivity extends SimpleActivity {
              public void onCancelled (DatabaseError databaseError){
                  Log.d("onCancelled: ", "" + databaseError);
              }
-         }
+        }
         );
-
         today2.addValueEventListener(new ValueEventListener() {
                  @Override
                  public void onDataChange (DataSnapshot data) {
@@ -103,12 +84,6 @@ public class TodayEntryActivity extends SimpleActivity {
                  }
              }
         );
-
-        /*String q1 = dailyQuestions.get(day);
-        handleOpenedToday(q1);
-        String q2 = dailyQuestions.get(day + 1000);
-        $TV(R.id.question_1).setText(q1);
-        $TV(R.id.question_2).setText(q2);*/
     }
 
     //If the app has already been opened today, there wil already be
@@ -140,7 +115,6 @@ public class TodayEntryActivity extends SimpleActivity {
         } catch (Exception e) {
             // do nothing
         }
-
     }
 
     private void setDate() {
@@ -148,7 +122,6 @@ public class TodayEntryActivity extends SimpleActivity {
         String m = Integer.toString(date[0] + 1);
         String d = Integer.toString(date[1]);
         String y = Integer.toString(date[2]);
-
         $TV(R.id.date_view).setText("Today is: " + m + "/" + d + "/" + y);
     }
 
