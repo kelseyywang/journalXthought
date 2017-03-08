@@ -48,7 +48,6 @@ public class OldEntryActivity extends SimpleActivity {
                     answer1 = scanner.next();
                     scanner.next(); //question 2
                     answer2 = scanner.next();
-                    //TODO: see if this is ok
                     mc = scanner.next();
                     dc = scanner.next();
                     yc = scanner.next();
@@ -91,7 +90,6 @@ public class OldEntryActivity extends SimpleActivity {
         String dm = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         String ym = Integer.toString(calendar.get(Calendar.YEAR));
 
-        //PrintStream tempOutput2 = new PrintStream(openFileOutput("temp_thoughts2.txt", MODE_APPEND));
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         for (int i = 0; i < questionsArraylist.size(); i++) {
             if (splitLineHelper(questionsArraylist.get(i))[0].equals(question)) {
@@ -106,10 +104,6 @@ public class OldEntryActivity extends SimpleActivity {
             writer.println(thoughtsArraylist.get(i));
         }
         writer.close();
-        /*File filesDirectory2 = getFilesDir();
-        File tempFile2 = new File(filesDirectory2, "temp_thoughts2.txt");
-        File oldFile2 = new File(filesDirectory2, "thoughtsList.txt");
-        tempFile2.renameTo(oldFile2);*/
     }
 
     private List<String> getList() {
@@ -174,7 +168,6 @@ public class OldEntryActivity extends SimpleActivity {
 
         replaceLineFromFile(getQuestionsList(), getList(), question1, answer1,
                 question2, answer2, dateCreated[0], dateCreated[1], dateCreated[2]);
-
         Intent goToMenu = new Intent(this, AllEntriesActivity.class);
         startActivity(goToMenu);
     }

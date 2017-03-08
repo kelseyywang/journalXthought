@@ -12,6 +12,17 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    productFlavors {
+        dev {
+            // Enable pre-dexing to produce an APK that can be tested on
+            // Android 5.0+ without the time-consuming DEX build processes.
+            minSdkVersion 21
+        }
+        prod {
+            // The actual minSdkVersion for the production version.
+            minSdkVersion 14
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -28,7 +39,6 @@ dependencies {
     compile files('libs/stanford-android-lib.jar')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:support-v4:25.2.0'
-    compile 'com.google.android.gms:play-services:10.0.1'
     compile "com.google.firebase:firebase-database:10.0.1"
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.android.support:multidex:1.0.0'

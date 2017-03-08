@@ -10,11 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.amulyakhare.textdrawable.TextDrawable;
-
 import stanford.androidlib.*;
-
 import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
@@ -33,12 +30,6 @@ public class AllEntriesActivity extends SimpleActivity {
 
     @Override
     public void onItemClick(ListView list, int index) {
-        /*HashMap<String, String> itemsAtPosition = (HashMap<String, String>) list.getItemAtPosition(index);
-        String thoughtClicked = itemsAtPosition.get("questions");
-        Intent goToEntry = new Intent(this, OldEntryActivity.class);
-        goToEntry.putExtra("thoughtClicked", thoughtClicked);
-        startActivity(goToEntry);*/
-
         ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
         String thoughtClicked = itemsAtPosition.getQ1() + "\n" + itemsAtPosition.getQ2();
         Intent goToEntry = new Intent(this, OldEntryActivity.class);
@@ -148,29 +139,6 @@ public class AllEntriesActivity extends SimpleActivity {
 
         CustomAdapter customAdapter = new CustomAdapter(this, objects);
         $LV(R.id.thought_list).setAdapter(customAdapter);
-        /*TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect("A", Color.RED, 10);
-        $IV(R.id.image_view).setImageDrawable(drawable);*/
-
-/*
-        //START OF OLD LISTVIEW ADAPTER WITH STATIC ICON
-        //adapter adapted :^) from http://wptrafficanalyzer.in/blog/listview-with-images-and-text-using-simple-adapter-in-android/
-        List<String> questions = getQuestionsList();
-        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
-        for(int i = 0; i < questions.size(); i++){
-            HashMap<String, String> hm = new HashMap<String,String>();
-            hm.put("questions", questions.get(i));
-            hm.put("icon", Integer.toString(R.drawable.notebook));
-            aList.add(hm);
-        }
-        String[] from = {"icon", "questions"};
-        int[] to = {R.id.image_view, R.id.both_questions};
-        //reference http://stackoverflow.com/questions/11106418/how-to-set-adapter-in-case-of-multiple-textviews-per-listview
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_element, from, to);
-        $LV(R.id.thought_list).setAdapter(adapter);
-        //SimpleList.with(this).setItems(R.id.thought_list, getQuestionsList());
-*/
-
     }
 
     //Deletes items when thoughts are long clicked
@@ -202,5 +170,4 @@ public class AllEntriesActivity extends SimpleActivity {
         }
         writer.close();
     }
-
 }
