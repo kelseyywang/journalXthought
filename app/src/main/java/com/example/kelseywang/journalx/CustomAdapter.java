@@ -2,6 +2,7 @@ package com.example.kelseywang.journalx;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +62,8 @@ public class CustomAdapter extends BaseAdapter {
         holder.q1_tv.setText(objects.get(position).getQ1());
         holder.q2_tv.setText(objects.get(position).getQ2());
         TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect(objects.get(position).getDrawableChar(), Color.RED, 40);
+                .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 28);
         holder.image_view.setImageDrawable(drawable);
         return convertView;
     }
-        }
+}

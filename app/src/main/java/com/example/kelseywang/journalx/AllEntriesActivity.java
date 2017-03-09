@@ -1,20 +1,27 @@
 package com.example.kelseywang.journalx;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.amulyakhare.textdrawable.TextDrawable;
+
 import stanford.androidlib.*;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
+
+
+//use https://github.com/emilsjolander/StickyListHeaders
 
 public class AllEntriesActivity extends SimpleActivity {
 
@@ -22,7 +29,7 @@ public class AllEntriesActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_entries);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
         setList();
         $LV(R.id.thought_list).setOnItemClickListener(this);
         $LV(R.id.thought_list).setOnItemLongClickListener(this);
@@ -126,10 +133,7 @@ public class AllEntriesActivity extends SimpleActivity {
 
     //Sets list
     private void setList() {
-        ArrayList<ListElement> objects = new ArrayList<ListElement>();
-        //ListElement testElement  = new ListElement("THIS IS QUESTION 1!!! wOOo", "QUESTION DOS!", "1");
-        //objects.add(testElement);
-
+        ArrayList<ListElement> objects = new ArrayList<>();
         List<String> questionsWithDates = getQuestionsListWithDates();
         for (String questionWithDate : questionsWithDates) {
             String[] elements = questionWithDate.split("\\r?\\n");

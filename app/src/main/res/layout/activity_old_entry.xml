@@ -1,3 +1,7 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -9,17 +13,18 @@
     android:paddingLeft="16dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="16dp"
-    tools:context="com.example.kelseywang.journalx.OldEntryActivity"
-    android:weightSum="1">
+    tools:context="com.example.kelseywang.journalx.OldEntryActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center_horizontal"
-        android:textSize="15dp"
-        android:layout_marginBottom="15dp"
+        android:textSize="18dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-light"
         android:id="@+id/date_created"
+        android:textColor="@color/blue1"
         />
 
     <TextView
@@ -27,21 +32,25 @@
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center_horizontal"
-        android:textSize="15dp"
-        android:layout_marginBottom="15dp"
+        android:textSize="12dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-light"
         android:id="@+id/date_modified"
+        android:textColor="@color/blue1"
         />
 
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="10dp">
         <TextView
             android:id="@+id/question_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:fontFamily="sans-serif-light"
             android:text=""
             />
 
@@ -51,18 +60,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
-            android:minHeight="100dp"
+            android:minHeight="150dp"
             android:text=""
             />
     </LinearLayout>
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/question_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:fontFamily="sans-serif-light"
             android:text=""
             />
         <EditText
@@ -71,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
-            android:minHeight="100dp"
+            android:minHeight="150dp"
             android:text=""
             />
     </LinearLayout>
@@ -87,3 +98,4 @@
         />
 
 </LinearLayout>
+</ScrollView>

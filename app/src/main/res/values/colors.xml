@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="seaFoam">#d5f2ed</color>
+    <color name="gray1">#f4f7f6</color>
+    <color name="blue1">#6d87ce</color>
 </resources>
