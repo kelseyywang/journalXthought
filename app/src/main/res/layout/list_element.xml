@@ -13,30 +13,51 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         card_view:cardCornerRadius="4dp"
-        card_view:cardBackgroundColor="@color/seaFoam">
+        card_view:cardBackgroundColor="@color/gray1">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
         android:orientation="horizontal">
-        <ImageView android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:id="@+id/image_view"
-            android:layout_margin="10dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mar"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/blue1"
+                android:textSize="15dp"
+                android:id="@+id/month"
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="15dp"
+                />
+            <ImageView android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:id="@+id/image_view"
+                android:layout_marginBottom="11dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
             <TextView
                 android:id="@+id/q1_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:textSize="18dp"
+                android:minLines="2"
+                android:maxLines="2"
                 android:layout_marginLeft="10dp"
-                android:paddingTop="2dp"
+                android:layout_marginBottom="3dp"
                 />
             <TextView
                 android:id="@+id/q2_tv"
@@ -44,7 +65,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:textSize="18dp"
+                android:minLines="2"
+                android:maxLines="2"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
                 />
         </LinearLayout>
     </LinearLayout>

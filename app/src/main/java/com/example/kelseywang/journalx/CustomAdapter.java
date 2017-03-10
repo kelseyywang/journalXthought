@@ -27,6 +27,7 @@ public class CustomAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView q1_tv;
         TextView q2_tv;
+        TextView month;
         ImageView image_view;
     }
 
@@ -54,6 +55,7 @@ public class CustomAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_element, null);
             holder.q1_tv = (TextView) convertView.findViewById(R.id.q1_tv);
             holder.q2_tv = (TextView) convertView.findViewById(R.id.q2_tv);
+            holder.month = (TextView) convertView.findViewById(R.id.month);
             holder.image_view = (ImageView) convertView.findViewById(R.id.image_view);
             convertView.setTag(holder);
         } else {
@@ -62,7 +64,8 @@ public class CustomAdapter extends BaseAdapter {
         holder.q1_tv.setText(objects.get(position).getQ1());
         holder.q2_tv.setText(objects.get(position).getQ2());
         TextDrawable drawable = TextDrawable.builder()
-                .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 28);
+                .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 25);
+        holder.month.setText(objects.get(position).getMonth());
         holder.image_view.setImageDrawable(drawable);
         return convertView;
     }

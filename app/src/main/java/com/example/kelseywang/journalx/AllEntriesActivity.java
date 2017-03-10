@@ -24,7 +24,8 @@ import java.util.*;
 //use https://github.com/emilsjolander/StickyListHeaders
 
 public class AllEntriesActivity extends SimpleActivity {
-
+    final List<String> MONTHS_ABBREVS = new ArrayList<>(Arrays.asList(
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +106,7 @@ public class AllEntriesActivity extends SimpleActivity {
 
     //Questions list has just questions--one per line, and two
     //consecutive ones forming the questions for one single day
-    private List<String> getQuestionsListWithDates() {
+    private List<String> getQuestionsListWithMonthsDates() {
         List<String> thoughtArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
         String mc, dc, yc,
@@ -123,7 +124,7 @@ public class AllEntriesActivity extends SimpleActivity {
                 mm = scanner.next();
                 dm = scanner.next();
                 ym = scanner.next();
-                thoughtArraylist.add(q1 + "\n" + q2 + "\n" + dc);
+                thoughtArraylist.add(q1 + "\n" + q2 + "\n" + MONTHS_ABBREVS.get(Integer.parseInt(mc)) + "\n" + dc);
             }
         } catch (Exception e) {
             // do nothing
@@ -134,10 +135,10 @@ public class AllEntriesActivity extends SimpleActivity {
     //Sets list
     private void setList() {
         ArrayList<ListElement> objects = new ArrayList<>();
-        List<String> questionsWithDates = getQuestionsListWithDates();
-        for (String questionWithDate : questionsWithDates) {
-            String[] elements = questionWithDate.split("\\r?\\n");
-            ListElement newElement = new ListElement(elements[0], elements[1], elements[2]);
+        List<String> questionsWithDatesMonths = getQuestionsListWithMonthsDates();
+        for (String questionWithDateMonth : questionsWithDatesMonths) {
+            String[] elements = questionWithDateMonth.split("\\r?\\n");
+            ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3]);
             objects.add(newElement);
         }
 

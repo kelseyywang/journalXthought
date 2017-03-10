@@ -73,9 +73,9 @@ public class OldEntryActivity extends SimpleActivity {
     }
 
     private void setDates(String mc, String dc, String yc, String mm, String dm, String ym) {
-        $TV(R.id.date_created).setText("Created: " + Integer.toString(Integer.parseInt(mc) + 1) + "/" + dc + "/" + yc);
-        if(!mm.isEmpty()) {
-            $TV(R.id.date_modified).setText("Modified: " + Integer.toString(Integer.parseInt(mm) + 1) + "/" + dm + "/" + ym);
+        $TV(R.id.date_created).setText("Entry from " + Integer.toString(Integer.parseInt(mc) + 1) + "/" + dc + "/" + yc);
+        if(!mm.isEmpty() && !(mm.equals(mc) && dm.equals(dc) && ym.equals(yc))) {
+            $TV(R.id.date_modified).setText("Last modified on " + Integer.toString(Integer.parseInt(mm) + 1) + "/" + dm + "/" + ym);
         }
     }
 
@@ -92,7 +92,6 @@ public class OldEntryActivity extends SimpleActivity {
         String mm = Integer.toString(calendar.get(Calendar.MONTH));
         String dm = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
         String ym = Integer.toString(calendar.get(Calendar.YEAR));
-
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         for (int i = 0; i < questionsArraylist.size(); i++) {
             if (splitLineHelper(questionsArraylist.get(i))[0].equals(question)) {

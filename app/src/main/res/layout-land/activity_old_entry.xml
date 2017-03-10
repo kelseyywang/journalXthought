@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center_horizontal"
-        android:textSize="18dp"
-        android:layout_marginBottom="5dp"
+        android:textSize="20dp"
+        android:layout_marginBottom="3dp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/date_created"
         android:textColor="@color/blue1"
@@ -56,12 +56,14 @@
 
         <EditText
             android:id="@+id/answer_1"
-            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
             android:minHeight="100dp"
             android:text=""
+            android:gravity="top"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine"
             />
     </LinearLayout>
     <LinearLayout
@@ -78,12 +80,14 @@
             />
         <EditText
             android:id="@+id/answer_2"
-            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
             android:minHeight="100dp"
             android:text=""
+            android:gravity="top"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine"
             />
     </LinearLayout>
 
