@@ -21,8 +21,6 @@ import java.io.PrintStream;
 import java.util.*;
 
 
-//use https://github.com/emilsjolander/StickyListHeaders
-
 public class AllEntriesActivity extends SimpleActivity {
     final List<String> MONTHS_ABBREVS = new ArrayList<>(Arrays.asList(
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));

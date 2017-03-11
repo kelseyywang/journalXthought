@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,33 +30,42 @@ public class OpenedActivity extends SimpleActivity {
     private final int START_DAY_OF_YEAR = 67; //should be day which app is launched - 1
     private String q1, q2;
     private String test = "a";
+    private int month, day, year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
+        Calendar calendar = Calendar.getInstance();
+        int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        year = calendar.get(Calendar.YEAR);
+
 
         ProgressWheel pw = (ProgressWheel) findViewById(R.id.pw_spinner);
         pw.startSpinning();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
+
+        if (wroteEntryToday(month, day, year)) {
+            Intent goToAll = new Intent(this, AllEntriesActivity.class);
+            startActivity(goToAll);
+        }
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(FIREBASE_USERNAME, FIREBASE_PASSWORD);
-        setQuestions();
+        setQuestions(dayOfYear);
     }
-    private void setQuestions() {
-        Log.d("OPENED" , test);
-        //get day of year
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_YEAR);
-        Log.d("DAY IS ", Integer.toString(day));
 
+    public void offlineClicked(View view) {
+        Intent goToAll = new Intent(this, AllEntriesActivity.class);
+        startActivity(goToAll);
+    }
+    private void setQuestions(int day) {
         final DatabaseReference fb = FirebaseDatabase
                 .getInstance().getReference();
         DatabaseReference fbQuestionsToday = fb.child("questions").child(Integer.toString(day - START_DAY_OF_YEAR));
-        Log.d("NUMBER QUESTION", Integer.toString(day - START_DAY_OF_YEAR));
         final DatabaseReference today1 = fbQuestionsToday.child("Q1");
         final DatabaseReference today2 = fbQuestionsToday.child("Q2");
-        Log.d("OPENED2" , test);
         today1.addValueEventListener(new ValueEventListener() {
             @Override
              public void onDataChange (DataSnapshot data) {
@@ -84,39 +94,37 @@ public class OpenedActivity extends SimpleActivity {
         );
     }
     private void setQ1(String myQ1) {
-        Log.d("Q1", test);
         if (myQ1 != null) {
             q1 = myQ1;
-            if (q2 != null) {
-                if (openedToday(q1)) {
-                    Intent goToAll = new Intent(this, AllEntriesActivity.class);
-                    startActivity(goToAll);
-                }
-                else {
-                    Intent goToToday = new Intent(this, TodayEntryActivity.class);
-                    goToToday.putExtra("q1", q1);
-                    goToToday.putExtra("q2", q2);
-                    startActivity(goToToday);
-                }
+            if (q2 != null && !wroteEntryToday(month, day, year)) {
+                Intent goToToday = new Intent(this, TodayEntryActivity.class);
+                goToToday.putExtra("q1", q1);
+                goToToday.putExtra("q2", q2);
+                startActivity(goToToday);
             }
         }
     }
 
     private void setQ2(String myQ2) {
-        Log.d("Q2", test);
         if (myQ2 != null) {
             q2 = myQ2;
-            if (q1 != null) {
-                setQ1(q1);
-                //go back to setQ1 because need q1 info to call openedToday
-                //occurs when q2 data is retrieved after q1's
+            if (q1 != null && !wroteEntryToday(month, day, year)) {
+                Intent goToToday = new Intent(this, TodayEntryActivity.class);
+                goToToday.putExtra("q1", q1);
+                goToToday.putExtra("q2", q2);
+                startActivity(goToToday);
             }
         }
     }
 
     //If the app has already been opened today, there wil already be
     //an entry for the daily questions and will return true
-    private boolean openedToday(String todayQuestion1) {
+    private boolean wroteEntryToday(int month, int day, int year) {
+        Log.d("START", test);
+        Log.d("mc!!!!", Integer.toString(month));
+        Log.d("dc1!!!!", Integer.toString(day));
+        Log.d("yc!!!", Integer.toString(year));
+
         String q1, a1, q2, a2;
         String mc, dc, yc,
                 mm, dm, ym;
@@ -133,7 +141,13 @@ public class OpenedActivity extends SimpleActivity {
                 mm = scanner.next();
                 dm = scanner.next();
                 ym = scanner.next();
-                if(q1.equals(todayQuestion1)) {
+                Log.d("mc", mc);
+                Log.d("dc", dc);
+                Log.d("yc", yc);
+
+                if(mc.equals(Integer.toString(month)) && dc.equals(Integer.toString(day))
+                        && yc.equals(Integer.toString(year))) {
+
                     return true;
                 }
             }
