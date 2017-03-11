@@ -56,8 +56,10 @@
                 android:textSize="18dp"
                 android:minLines="2"
                 android:maxLines="2"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginBottom="3dp"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
                 />
             <TextView
                 android:id="@+id/q2_tv"
@@ -67,8 +69,10 @@
                 android:textSize="18dp"
                 android:minLines="2"
                 android:maxLines="2"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
+                android:layout_marginRight="15dp"
+                android:ellipsize="end"
                 />
         </LinearLayout>
     </LinearLayout>
