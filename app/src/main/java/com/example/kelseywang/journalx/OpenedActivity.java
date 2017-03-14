@@ -16,7 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.todddavies.components.progressbar.ProgressWheel;
 
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
@@ -45,7 +48,7 @@ public class OpenedActivity extends SimpleActivity {
 
         ProgressWheel pw = (ProgressWheel) findViewById(R.id.pw_spinner);
         pw.startSpinning();
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
 
         if (wroteEntryToday(month, day, year)) {
             Intent goToAll = new Intent(this, AllEntriesActivity.class);
@@ -120,14 +123,10 @@ public class OpenedActivity extends SimpleActivity {
     //If the app has already been opened today, there wil already be
     //an entry for the daily questions and will return true
     private boolean wroteEntryToday(int month, int day, int year) {
-        Log.d("START", test);
-        Log.d("mc!!!!", Integer.toString(month));
-        Log.d("dc1!!!!", Integer.toString(day));
-        Log.d("yc!!!", Integer.toString(year));
 
         String q1, a1, q2, a2;
         String mc, dc, yc,
-                mm, dm, ym;
+                mm, dm, ym, favorited;
         try {
             Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
             while (scanner.hasNext()) {
@@ -141,10 +140,7 @@ public class OpenedActivity extends SimpleActivity {
                 mm = scanner.next();
                 dm = scanner.next();
                 ym = scanner.next();
-                Log.d("mc", mc);
-                Log.d("dc", dc);
-                Log.d("yc", yc);
-
+                favorited = scanner.next();
                 if(mc.equals(Integer.toString(month)) && dc.equals(Integer.toString(day))
                         && yc.equals(Integer.toString(year))) {
 
@@ -157,3 +153,55 @@ public class OpenedActivity extends SimpleActivity {
         return false;
     }
 }
+
+//This method is for manually resetting the list RIP
+    /*public void testThings() {
+
+        Log.d(test, "ENTERED");
+
+        List<String> thoughtArraylist = new ArrayList<>();
+        thoughtArraylist.clear();
+        thoughtArraylist.add(
+                "1 place where you form your most creative ideas:" + "\t" +
+                    "The shower!" + "\n" +
+                        "What's unique about this space that allows it to be like that?" + "\t" +
+                        "I am forced to stop and think about nothing except what I want to" + "\n"
+                        + "2" + "\t" + "9" + "\t" + "2017" + "\t"
+                        + "2" + "\t" + "10" + "\t" + "2017" + "\t" +
+                        "false"
+        );
+        thoughtArraylist.add(
+                "1 thing you wish you didn't give up:" + "\t" +
+                        "Dance" + "\n" +
+                        "If this was changed, you wouldn't have given that up:" + "\t" +
+                        "If I watched Dance Moms back then..." + "\n"
+                        + "2" + "\t" + "10" + "\t" + "2017" + "\t"
+                        + "2" + "\t" + "12" + "\t" + "2017" + "\t" +
+                        "false"
+        );
+        thoughtArraylist.add(
+                "1 way to re-motivate yourself after failure:" + "\t" +
+                        "remind yourself of your potential" + "\n" +
+                        "Similarly, how can you re-motivate a team after failure?" + "\t" +
+                        "let all team members know their individual worth and contributions" + "\n"
+                        + "2" + "\t" + "11" + "\t" + "2017" + "\t"
+                        + "2" + "\t" + "11" + "\t" + "2017" + "\t" +
+                        "false"
+        );
+        thoughtArraylist.add(
+                "1 personality trait you are currently trying to improve:" + "\t" +
+                        "Impatience with myself" + "\n" +
+                        "What would you invent to make that easier?" + "\t" +
+                        "an app that promotes productive self-reflection... oh wait" + "\n"
+                        + "2" + "\t" + "13" + "\t" + "2017" + "\t"
+                        + "2" + "\t" + "13" + "\t" + "2017" + "\t" +
+                        "false"
+        );
+
+        PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
+        for (int i = 0; i < thoughtArraylist.size(); i++) {
+            writer.println(thoughtArraylist.get(i));
+            Log.d(test, thoughtArraylist.get(i));
+        }
+        writer.close();
+     }*/

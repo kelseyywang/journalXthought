@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:background="@color/seaFoam">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -22,7 +23,7 @@
         android:gravity="center"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-light"
-        android:textColor="@color/blue1"
+        android:textColor="@color/green1"
         android:textSize="20dp"
         android:id="@+id/date_view"
         />
@@ -35,6 +36,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="sans-serif-light"
         android:textSize="12dp"
+        android:textColor="@color/green1"
         />
 
     <LinearLayout
@@ -49,6 +51,7 @@
             android:textSize="15dp"
             android:fontFamily="sans-serif-light"
             android:text="default"
+            android:textColor="@color/blue1"
             />
 
         <EditText
@@ -73,6 +76,7 @@
             android:textSize="15dp"
             android:fontFamily="sans-serif-light"
             android:text="default"
+            android:textColor="@color/blue1"
             />
         <EditText
             android:id="@+id/answer_2"

@@ -15,7 +15,7 @@ public class TodayEntryActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_entry);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
 
         setDate();
         setQuestions();
@@ -64,8 +64,9 @@ public class TodayEntryActivity extends SimpleActivity {
         //attaching the month, day of month, and year entry
         //was created, followed immediately by date modified
         //(empty string are placeholders before modification
+        //and favorited
         output.println(mc + "\t" + dc + "\t" + yc + "\t" +
-                "" + "\t" + "" + "\t" + "");
+                "" + "\t" + "" + "\t" + "" + "\t" + "false");
         output.close();
 
         Intent goToMenu = new Intent(this, AllEntriesActivity.class);

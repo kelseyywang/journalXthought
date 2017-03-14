@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
+    android:background="@color/seaFoam"
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +26,7 @@
         android:layout_marginBottom="3dp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/date_created"
-        android:textColor="@color/blue1"
+        android:textColor="@color/green1"
         />
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/date_modified"
-        android:textColor="@color/blue1"
+        android:textColor="@color/green1"
         />
 
 
@@ -53,6 +54,7 @@
             android:textSize="15dp"
             android:fontFamily="sans-serif-light"
             android:text=""
+            android:textColor="@color/blue1"
             />
 
         <EditText
@@ -78,6 +80,7 @@
             android:textSize="15dp"
             android:fontFamily="sans-serif-light"
             android:text=""
+            android:textColor="@color/blue1"
             />
         <EditText
             android:id="@+id/answer_2"

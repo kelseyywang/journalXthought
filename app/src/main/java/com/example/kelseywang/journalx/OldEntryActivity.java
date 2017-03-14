@@ -20,11 +20,12 @@ import stanford.androidlib.*;
 public class OldEntryActivity extends SimpleActivity {
 
     private String[] dateCreated;
+    private String favorited;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_entry);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
         setAllText();
     }
     private void setAllText() {
@@ -41,7 +42,7 @@ public class OldEntryActivity extends SimpleActivity {
     private void setAnswers(String questions) {
         String answer1 = "";
         String answer2 = "";
-        String mc, dc, yc, mm, dm, ym;
+        String mc, dc, yc, mm, dm, ym, favorited;
         String[] questionsArray = questions.split("\\r?\\n");
         try {
             Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
@@ -57,7 +58,9 @@ public class OldEntryActivity extends SimpleActivity {
                     mm = scanner.next();
                     dm = scanner.next();
                     ym = scanner.next();
+                    favorited = scanner.next();
                     storeDateCreated(mc, dc, yc);
+                    storeFavorited(favorited);
                     setDates(mc, dc, yc, mm, dm, ym);
                 }
             }
@@ -70,6 +73,9 @@ public class OldEntryActivity extends SimpleActivity {
 
     private void storeDateCreated(String mc, String dc, String yc) {
         dateCreated = new String[]{mc, dc, yc};
+    }
+    private void storeFavorited(String wasFavorited) {
+        favorited = wasFavorited;
     }
 
     private void setDates(String mc, String dc, String yc, String mm, String dm, String ym) {
@@ -87,7 +93,7 @@ public class OldEntryActivity extends SimpleActivity {
 
     private void replaceLineFromFile(List<String> questionsArraylist, List<String> thoughtsArraylist,
                                      String question, String newAnswer, String question2, String newAnswer2,
-                                     String mc, String dc, String yc) {
+                                     String mc, String dc, String yc, String favorited) {
         Calendar calendar = Calendar.getInstance();
         String mm = Integer.toString(calendar.get(Calendar.MONTH));
         String dm = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
@@ -98,7 +104,7 @@ public class OldEntryActivity extends SimpleActivity {
                 //changing date modified to today
                 thoughtsArraylist.set(i, question + "\t" + newAnswer + "\n" + question2 + "\t" + newAnswer2
                         + "\n" + mc + "\t" + dc + "\t" + yc + "\t"
-                        + mm + "\t" + dm + "\t" + ym);
+                        + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
                 break;
             }
         }
@@ -112,7 +118,7 @@ public class OldEntryActivity extends SimpleActivity {
         List<String> thoughtArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
         String mc, dc, yc,
-                mm, dm, ym;
+                mm, dm, ym, favorited;
         try {
             Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
             while (scanner.hasNext()) {
@@ -126,9 +132,10 @@ public class OldEntryActivity extends SimpleActivity {
                 mm = scanner.next();
                 dm = scanner.next();
                 ym = scanner.next();
+                favorited = scanner.next();
                 thoughtArraylist.add(q1 + "\t" + a1 + "\n" + q2 + "\t" + a2 + "\n"
                         + mc + "\t" + dc + "\t" + yc + "\t"
-                        + mm + "\t" + dm + "\t" + ym);
+                        + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
             }
         } catch (Exception e) {
             // do nothing
@@ -140,7 +147,7 @@ public class OldEntryActivity extends SimpleActivity {
         List<String> thoughtArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
         String mc, dc, yc,
-                mm, dm, ym;
+                mm, dm, ym, favorited;
         try {
             Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
             while (scanner.hasNext()) {
@@ -154,6 +161,7 @@ public class OldEntryActivity extends SimpleActivity {
                 mm = scanner.next();
                 dm = scanner.next();
                 ym = scanner.next();
+                favorited = scanner.next();
                 thoughtArraylist.add(q1 + "\n" + q2);
             }
         } catch (Exception e) {
@@ -169,7 +177,7 @@ public class OldEntryActivity extends SimpleActivity {
         String answer2 = $ET(R.id.answer_2).getText().toString();
 
         replaceLineFromFile(getQuestionsList(), getList(), question1, answer1,
-                question2, answer2, dateCreated[0], dateCreated[1], dateCreated[2]);
+                question2, answer2, dateCreated[0], dateCreated[1], dateCreated[2], favorited);
         Intent goToMenu = new Intent(this, AllEntriesActivity.class);
         startActivity(goToMenu);
     }
