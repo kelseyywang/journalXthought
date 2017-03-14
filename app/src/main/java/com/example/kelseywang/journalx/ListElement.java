@@ -9,12 +9,14 @@ public class ListElement {
     private String q2;
     private String month;
     private String drawableChar;
+    private int elevation;
 
-    public ListElement(String q1, String q2, String month, String drawableChar) {
+    public ListElement(String q1, String q2, String month, String drawableChar, int elevation) {
         this.q1 = q1;
         this.q2 = q2;
         this.month = month;
         this.drawableChar = drawableChar;
+        this.elevation = elevation;
     }
 
     public String getQ1() {
@@ -31,6 +33,10 @@ public class ListElement {
 
     public String getDrawableChar() {
         return drawableChar;
+    }
+
+    public int getElevation() {
+        return elevation;
     }
 
 

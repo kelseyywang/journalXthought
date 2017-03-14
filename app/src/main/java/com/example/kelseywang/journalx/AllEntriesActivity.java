@@ -23,7 +23,12 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
 
-
+//TESTING MODE IS ON!
+//TODO: MAKE FAVORITES DELETABLE
+//TODO: MAKE VIEW FAVORITES OPTION ON HEADER BAR
+//TODO: to use header, when user long clicks, set a private class boolean isThereaLongClick as well as the class variable index
+//to true, and set list again with this index's elevation set higher. When header bar clicked, you set favorites
+//and set isThereaLongClick to false and set list again. What about if you click elsewhere bc u clicked accidentally?
 public class AllEntriesActivity extends SimpleActivity {
     final List<String> MONTHS_ABBREVS = new ArrayList<>(Arrays.asList(
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
@@ -38,7 +43,10 @@ public class AllEntriesActivity extends SimpleActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.all_entries_toolbar);
         setSupportActionBar(myToolbar);
 
-
+        List<String> thing = getList();
+        for(String i : thing) {
+            Log.d("THING", i);
+        }
         setList();
         $LV(R.id.thought_list).setOnItemClickListener(this);
         $LV(R.id.thought_list).setOnItemLongClickListener(this);
@@ -54,8 +62,9 @@ public class AllEntriesActivity extends SimpleActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.all_entries_toolbar:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.action_favorite:
+                Log.d(test, "action favorite clicked");
+                //setFavorite(indexLongClicked);
                 return true;
 
             default:
@@ -105,6 +114,44 @@ public class AllEntriesActivity extends SimpleActivity {
             // do nothing
         }
         return thoughtArraylist;
+    }
+
+    private List<String> getFavoritedList() {
+        List<String> favoritedList = new ArrayList<>();
+        String q1, a1, q2, a2;
+        String mc, dc, yc,
+                mm, dm, ym, favorited;
+        try {
+            Scanner scanner = new Scanner(openFileInput("favoritedList.txt")).useDelimiter("\\t|\\n");
+            while (scanner.hasNext()) {
+                q1 = scanner.next();
+                a1 = scanner.next();
+                q2 = scanner.next();
+                a2 = scanner.next();
+                mc = scanner.next();
+                dc = scanner.next();
+                yc = scanner.next();
+                mm = scanner.next();
+                dm = scanner.next();
+                ym = scanner.next();
+                favorited = scanner.next();
+                favoritedList.add(q1 + "\t" + a1 + "\n" + q2 + "\t" + a2 + "\n"
+                        + mc + "\t" + dc + "\t" + yc + "\t"
+                        + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
+            }
+        } catch (Exception e) {
+            // do nothing
+        }
+        return favoritedList;
+    }
+
+
+    private void setFavorite(ListView list, int index) {
+        ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
+        String thoughtLongClicked = itemsAtPosition.getQ1() + "\n" + itemsAtPosition.getQ2();
+        List<String> questionsArraylist = getQuestionsList();
+        List<String> thoughtsArraylist = getList();
+        switchToFavorited(questionsArraylist, thoughtsArraylist);
     }
 
     //Questions list has just questions--one per line, and two
@@ -157,7 +204,7 @@ public class AllEntriesActivity extends SimpleActivity {
                 dm = scanner.next();
                 ym = scanner.next();
                 favorited = scanner.next();
-                thoughtArraylist.add(q1 + "\n" + q2 + "\n" + MONTHS_ABBREVS.get(Integer.parseInt(mc)) + "\n" + dc);
+                thoughtArraylist.add(q1 + "\n" + q2 + "\n" + MONTHS_ABBREVS.get(Integer.parseInt(mc)) + "\n" + dc + "\n" + favorited);
             }
         } catch (Exception e) {
             // do nothing
@@ -171,7 +218,12 @@ public class AllEntriesActivity extends SimpleActivity {
         List<String> questionsWithDatesMonths = getQuestionsListWithMonthsDates();
         for (String questionWithDateMonth : questionsWithDatesMonths) {
             String[] elements = questionWithDateMonth.split("\\r?\\n");
-            ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3]);
+            int elevation = 5;
+            if(elements[4].equals("true")) {
+                elevation = 30;
+                Log.d(test, "RAISED ELEVATION");
+            }
+            ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3], elevation);
             objects.add(newElement);
         }
 
@@ -183,12 +235,18 @@ public class AllEntriesActivity extends SimpleActivity {
     //and updates the list with helper function removeLineFromFile
     @Override
     public boolean onItemLongClick(ListView list, int index) {
-        ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
+        indexLongClicked = index;
+        setFavorite(list, index);
+        setList();
+        //list.getAdapter().getView(index, null, list).findViewById(R.id.month).getContext();
+        //list.
+
+        /*ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
         String thoughtLongClicked = itemsAtPosition.getQ1() + "\n" + itemsAtPosition.getQ2();
         List<String> questionsArraylist = getQuestionsList();
         List<String> thoughtsArraylist = getList();
         removeLineFromFile(questionsArraylist, thoughtsArraylist, thoughtLongClicked);
-        setList();
+        setList();*/
         return true;
     }
 
@@ -208,4 +266,39 @@ public class AllEntriesActivity extends SimpleActivity {
         }
         writer.close();
     }
+
+
+    private void switchToFavorited(List<String> questionsArraylist, List<String> thoughtsArraylist) {
+        //replacing line in thoughtsList
+        replaceFavoritedInThoughtsList(questionsArraylist, thoughtsArraylist, indexLongClicked, "true");
+        //adding line in favoritesList
+        PrintStream writer = new PrintStream(openFileOutput("favoritedList.txt", MODE_APPEND));
+
+        //TODO: CHECK IF ITS ALREADY FAVORITED, IF IT IS THEN REMOVE IT AS A FAVORITE
+        writer.println(thoughtsArraylist.get(indexLongClicked));
+        writer.close();
+    }
+    private String[] splitOneEntryLine(String line) {
+        String[] retval = line.split("\\t|\\n");
+        for(String i : retval) {
+            Log.d("RETVAL", i);
+        }
+        return retval;
+    }
+
+    private void replaceFavoritedInThoughtsList(List<String> questionsArraylist, List<String> thoughtsArraylist,
+                                     int index, String favorited) {
+        PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
+        String[] line = splitOneEntryLine(thoughtsArraylist.get(index));
+        thoughtsArraylist.set(index, line[0] + "\t" + line[1] + "\n" + line[2] + "\t" + line[3]
+                + "\n" + line[4] + "\t" + line[5] + "\t" + line[6] + "\t"
+                + line[7] + "\t" + line[8] + "\t" + line[9] + "\t" + favorited);
+
+        for (int i = 0; i < thoughtsArraylist.size(); i++) {
+            writer.println(thoughtsArraylist.get(i));
+        }
+        writer.close();
+    }
+
 }
+

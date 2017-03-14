@@ -3,6 +3,7 @@ package com.example.kelseywang.journalx;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class CustomAdapter extends BaseAdapter {
     private ArrayList<ListElement> objects;
 
     private class ViewHolder {
+        CardView card_view;
         TextView q1_tv;
         TextView q2_tv;
         TextView month;
@@ -57,6 +59,7 @@ public class CustomAdapter extends BaseAdapter {
             holder.q2_tv = (TextView) convertView.findViewById(R.id.q2_tv);
             holder.month = (TextView) convertView.findViewById(R.id.month);
             holder.image_view = (ImageView) convertView.findViewById(R.id.image_view);
+            holder.card_view = (CardView) convertView.findViewById(R.id.card_view);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -67,6 +70,7 @@ public class CustomAdapter extends BaseAdapter {
                 .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 25);
         holder.month.setText(objects.get(position).getMonth());
         holder.image_view.setImageDrawable(drawable);
+        holder.card_view.setCardElevation(objects.get(position).getElevation()/1.0f);
         return convertView;
     }
 }

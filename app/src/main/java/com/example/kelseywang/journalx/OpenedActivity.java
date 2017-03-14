@@ -24,7 +24,6 @@ import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
 import stanford.androidlib.SimpleActivity;
-//TODO: LOOK AT DEBUG LOGS TO SEE WHY THE MESSAGES AINT PRINTIN
 
 public class OpenedActivity extends SimpleActivity {
     public static final String FIREBASE_USERNAME = "yeslek08@gmail.com";
@@ -39,6 +38,7 @@ public class OpenedActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
+        testThings();
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -51,6 +51,7 @@ public class OpenedActivity extends SimpleActivity {
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
 
         if (wroteEntryToday(month, day, year)) {
+            Log.d(test, "1");
             Intent goToAll = new Intent(this, AllEntriesActivity.class);
             startActivity(goToAll);
         }
@@ -152,10 +153,10 @@ public class OpenedActivity extends SimpleActivity {
         }
         return false;
     }
-}
+
 
 //This method is for manually resetting the list RIP
-    /*public void testThings() {
+    public void testThings() {
 
         Log.d(test, "ENTERED");
 
@@ -204,4 +205,6 @@ public class OpenedActivity extends SimpleActivity {
             Log.d(test, thoughtArraylist.get(i));
         }
         writer.close();
-     }*/
+     }
+}
+
