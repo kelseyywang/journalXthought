@@ -63,6 +63,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
     <LinearLayout
@@ -87,6 +88,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
 
@@ -98,6 +100,8 @@
         android:text="Save"
         android:layout_margin="10dp"
         android:onClick="saveClicked"
+        android:backgroundTint="@color/green1"
+        android:textColor="@color/gray1"
         />
 
 </LinearLayout>

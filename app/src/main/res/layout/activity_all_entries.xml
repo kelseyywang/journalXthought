@@ -8,7 +8,7 @@
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
-    android:paddingTop="5dp"
+    android:paddingTop="0dp"
     tools:context="com.example.kelseywang.journalx.AllEntriesActivity"
     android:orientation="vertical"
     android:background="@color/seaFoam">
@@ -17,11 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/green1"
-        android:elevation="4dp"
-        android:title="All your thoughts"
+        android:elevation="5dp"
         app:titleTextColor="@color/white"
-        android:titleTextColor="@color/seaFoam"
-        app:logo="@drawable/favorite"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         />
 
@@ -33,7 +30,18 @@
         android:textColor="@color/blue1"
         android:layout_margin="10dp"
         android:textSize="20dp"
+        android:id="@+id/all_entries_header"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:layout_margin="10dp"
+        android:id="@+id/help_textview"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/green1"
+        android:textSize="18dp"
+        android:gravity="center_horizontal"/>
     <ListView
         android:id="@+id/thought_list"
         android:layout_width="match_parent"

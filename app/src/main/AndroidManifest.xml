@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".OldEntryActivity" />
         <activity android:name=".AllEntriesActivity" />
-        <activity android:name=".TodayEntryActivity"></activity>
+        <activity android:name=".TodayEntryActivity" android:noHistory="true"></activity>
     </application>
 
 </manifest>

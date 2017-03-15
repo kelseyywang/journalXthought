@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/green1"
@@ -31,9 +32,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome back! Take more food for thought."
+        android:text="Welcome back!"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="sans-serif-light"
         android:textSize="12dp"
         android:textColor="@color/green1"
@@ -43,7 +44,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="25dp">
         <TextView
             android:id="@+id/question_1"
             android:layout_width="wrap_content"
@@ -63,6 +64,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
     <LinearLayout
@@ -87,6 +89,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
 
@@ -96,8 +99,10 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:onClick="saveClicked"
+        android:backgroundTint="@color/green1"
+        android:textColor="@color/gray1"
         />
 
 </LinearLayout>

@@ -26,9 +26,6 @@ import java.util.concurrent.CountDownLatch;
 import stanford.androidlib.SimpleActivity;
 
 public class OpenedActivity extends SimpleActivity {
-    public static final String FIREBASE_USERNAME = "yeslek08@gmail.com";
-    public static final String FIREBASE_PASSWORD = "yeslek";
-    private FirebaseAuth mAuth;
     private final int START_DAY_OF_YEAR = 67; //should be day which app is launched - 1
     private String q1, q2;
     private String test = "a";
@@ -38,7 +35,7 @@ public class OpenedActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
-        testThings();
+        //testThings();
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -54,16 +51,17 @@ public class OpenedActivity extends SimpleActivity {
             Log.d(test, "1");
             Intent goToAll = new Intent(this, AllEntriesActivity.class);
             startActivity(goToAll);
+            finish();
         }
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(FIREBASE_USERNAME, FIREBASE_PASSWORD);
         setQuestions(dayOfYear);
     }
 
     public void offlineClicked(View view) {
         Intent goToAll = new Intent(this, AllEntriesActivity.class);
         startActivity(goToAll);
+        finish();
     }
+
     private void setQuestions(int day) {
         final DatabaseReference fb = FirebaseDatabase
                 .getInstance().getReference();
@@ -71,32 +69,35 @@ public class OpenedActivity extends SimpleActivity {
         final DatabaseReference today1 = fbQuestionsToday.child("Q1");
         final DatabaseReference today2 = fbQuestionsToday.child("Q2");
         today1.addValueEventListener(new ValueEventListener() {
-            @Override
-             public void onDataChange (DataSnapshot data) {
-                 String todayQ1 = (String) data.getValue();
-                 if(todayQ1 != null) {
-                     setQ1(todayQ1);
-                 }
-             }
-             @Override
-             public void onCancelled (DatabaseError databaseError){
-                 Log.d("onCancelled: ", "" + databaseError);
-             }
-         }
+                                         @Override
+                                         public void onDataChange(DataSnapshot data) {
+                                             String todayQ1 = (String) data.getValue();
+                                             if (todayQ1 != null) {
+                                                 setQ1(todayQ1);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void onCancelled(DatabaseError databaseError) {
+                                             Log.d("onCancelled: ", "" + databaseError);
+                                         }
+                                     }
         );
         today2.addValueEventListener(new ValueEventListener() {
-             @Override
-             public void onDataChange (DataSnapshot data) {
-                 String todayQ2 = (String) data.getValue();
-                 setQ2(todayQ2);
-             }
-             @Override
-             public void onCancelled (DatabaseError databaseError){
-                 Log.d("onCancelled: ", "" + databaseError);
-             }
-         }
+                                         @Override
+                                         public void onDataChange(DataSnapshot data) {
+                                             String todayQ2 = (String) data.getValue();
+                                             setQ2(todayQ2);
+                                         }
+
+                                         @Override
+                                         public void onCancelled(DatabaseError databaseError) {
+                                             Log.d("onCancelled: ", "" + databaseError);
+                                         }
+                                     }
         );
     }
+
     private void setQ1(String myQ1) {
         if (myQ1 != null) {
             q1 = myQ1;
@@ -105,6 +106,7 @@ public class OpenedActivity extends SimpleActivity {
                 goToToday.putExtra("q1", q1);
                 goToToday.putExtra("q2", q2);
                 startActivity(goToToday);
+                finish();
             }
         }
     }
@@ -117,6 +119,7 @@ public class OpenedActivity extends SimpleActivity {
                 goToToday.putExtra("q1", q1);
                 goToToday.putExtra("q2", q2);
                 startActivity(goToToday);
+                finish();
             }
         }
     }
@@ -142,7 +145,7 @@ public class OpenedActivity extends SimpleActivity {
                 dm = scanner.next();
                 ym = scanner.next();
                 favorited = scanner.next();
-                if(mc.equals(Integer.toString(month)) && dc.equals(Integer.toString(day))
+                if (mc.equals(Integer.toString(month)) && dc.equals(Integer.toString(day))
                         && yc.equals(Integer.toString(year))) {
 
                     return true;
@@ -155,8 +158,9 @@ public class OpenedActivity extends SimpleActivity {
     }
 
 
+
 //This method is for manually resetting the list RIP
-    public void testThings() {
+   /* public void testThings() {
 
         Log.d(test, "ENTERED");
 
@@ -193,7 +197,7 @@ public class OpenedActivity extends SimpleActivity {
                 "1 personality trait you are currently trying to improve:" + "\t" +
                         "Impatience with myself" + "\n" +
                         "What would you invent to make that easier?" + "\t" +
-                        "an app that promotes productive self-reflection... oh wait" + "\n"
+                        "An app that promotes productive self-reflection... lmao" + "\n"
                         + "2" + "\t" + "13" + "\t" + "2017" + "\t"
                         + "2" + "\t" + "13" + "\t" + "2017" + "\t" +
                         "false"
@@ -205,6 +209,6 @@ public class OpenedActivity extends SimpleActivity {
             Log.d(test, thoughtArraylist.get(i));
         }
         writer.close();
-     }
+     }*/
 }
 

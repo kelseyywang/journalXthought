@@ -24,7 +24,8 @@
         android:text=""
         android:gravity="center_horizontal"
         android:textSize="20dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/date_created"
         android:textColor="@color/green1"
@@ -36,7 +37,7 @@
         android:text=""
         android:gravity="center_horizontal"
         android:textSize="12dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/date_modified"
         android:textColor="@color/green1"
@@ -47,7 +48,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="25dp">
         <TextView
             android:id="@+id/question_1"
             android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
     <LinearLayout
@@ -93,6 +95,7 @@
             android:gravity="top"
             android:scrollHorizontally="false"
             android:inputType="textMultiLine"
+            android:fontFamily="sans-serif-light"
             />
     </LinearLayout>
 
@@ -102,8 +105,10 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:onClick="saveClicked"
+        android:backgroundTint="@color/green1"
+        android:textColor="@color/gray1"
         />
 
 </LinearLayout>
