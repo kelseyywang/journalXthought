@@ -17,44 +17,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        android:textColor="@color/blue1"
-        android:textSize="20dp"
-        android:id="@+id/quote"
-        android:layout_marginBottom="30dp"/>
+        <TextView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/blue1"
+            android:textSize="20dp"
+            android:id="@+id/quote"
+            android:layout_marginBottom="30dp"/>
 
-    <com.todddavies.components.progressbar.ProgressWheel
-        android:id="@+id/pw_spinner"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_centerInParent="true"
-        ProgressWheel:pwText="Loading..."
-        ProgressWheel:pwTextColor="@color/green1"
-        ProgressWheel:pwTextSize="8dp"
-        ProgressWheel:pwRimColor="@color/seaFoam"
-        ProgressWheel:pwBarLength="70dp"
-        ProgressWheel:pwBarColor="@color/green1"
-        ProgressWheel:pwBarWidth="4dp"
-        ProgressWheel:pwRimWidth="6dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
-        android:text="Trouble loading? Check your connection."
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/green1"
-        android:textSize="13dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginBottom="8dp"/>
+        <com.todddavies.components.progressbar.ProgressWheel
+            android:id="@+id/pw_spinner"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            ProgressWheel:pwText="Loading..."
+            ProgressWheel:pwTextColor="@color/green1"
+            ProgressWheel:pwTextSize="8dp"
+            ProgressWheel:pwRimColor="@color/seaFoam"
+            ProgressWheel:pwBarLength="70dp"
+            ProgressWheel:pwBarColor="@color/green1"
+            ProgressWheel:pwBarWidth="4dp"
+            ProgressWheel:pwRimWidth="6dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Trouble loading? Check your connection."
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/green1"
+            android:textSize="13dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="8dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

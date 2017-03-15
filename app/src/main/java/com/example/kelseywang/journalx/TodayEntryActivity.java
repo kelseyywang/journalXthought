@@ -1,11 +1,8 @@
 package com.example.kelseywang.journalx;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-
 import stanford.androidlib.*;
 import java.io.PrintStream;
 import java.util.*;
@@ -15,8 +12,6 @@ public class TodayEntryActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_entry);
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
-
         setDate();
         setQuestions();
     }
@@ -32,8 +27,6 @@ public class TodayEntryActivity extends SimpleActivity {
         Intent intent = getIntent();
         String todayQ1 = intent.getStringExtra("q1");
         String todayQ2 = intent.getStringExtra("q2");
-        //Log.d("todayQ1",todayQ1);
-        //Log.d("todayQ2", todayQ2);
         $TV(R.id.question_1).setText(todayQ1);
         $TV(R.id.question_2).setText(todayQ2);
     }
@@ -68,7 +61,6 @@ public class TodayEntryActivity extends SimpleActivity {
         output.println(mc + "\t" + dc + "\t" + yc + "\t" +
                 "" + "\t" + "" + "\t" + "" + "\t" + "false");
         output.close();
-
         Intent goToMenu = new Intent(this, AllEntriesActivity.class);
         startActivity(goToMenu);
     }

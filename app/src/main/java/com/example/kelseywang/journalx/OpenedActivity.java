@@ -1,41 +1,48 @@
 package com.example.kelseywang.journalx;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.todddavies.components.progressbar.ProgressWheel;
-
-import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CountDownLatch;
 
 import stanford.androidlib.SimpleActivity;
+import stanford.androidlib.util.RandomGenerator;
 
 public class OpenedActivity extends SimpleActivity {
     private final int START_DAY_OF_YEAR = 67; //should be day which app is launched - 1
     private String q1, q2;
     private String test = "a";
     private int month, day, year;
+    private String[] OPENING_QUOTES = {"\"In order to understand the world, one has to turn away from it on occasion.\"\n-Albert Camus",
+            "\"Knowing yourself is the beginning of all wisdom.\"\n-Aristotle",
+    "\"The only journey is the one within.\"\n-Rainer Maria Rilke",
+    "\"A man wrapped up in himself makes a very small parcel.\"\n-John Ruskin",
+    "\"Nothing is forever. Except atoms.\"\n-Dannika Dark",
+    "\"Self is a sea boundless and measureless.\"\n-Kahlil Gibran",
+    "\"Wherever you go, you take yourself with you. If you see what I mean.\"\n-Neil Gaiman",
+    "\"The world should be a mirror that you reflect upon.\"\n-C. JoyBell C.",
+    "\"When all think alike, then no one is thinking.\"\n-Walter Lippman",
+    "\"To think creatively, we must be able to look afresh at what we normally take for granted.\"\n-George Kneller",
+    "\"The best way to have a good idea is to have a lot of ideas.\"\n-Linus Pauling",
+    "\"Discovery consists of seeing what everybody has seen and thinking what nobody has thought.\"\n-Albert von Szent-Gyorgy",
+    "\"To regard old problems from a new angle, requires creative imagination and marks real advance in science.\"\n-Albert Einstein",
+    "\"There's a way to do it better — find it.\"\n-Thomas Edison"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
         //testThings();
+        RandomGenerator rand = new RandomGenerator();
+        $TV(R.id.quote).setText(OPENING_QUOTES[rand.nextInt(0, OPENING_QUOTES.length - 1)]);
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -45,10 +52,8 @@ public class OpenedActivity extends SimpleActivity {
 
         ProgressWheel pw = (ProgressWheel) findViewById(R.id.pw_spinner);
         pw.startSpinning();
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#418a8e")));
 
         if (wroteEntryToday(month, day, year)) {
-            Log.d(test, "1");
             Intent goToAll = new Intent(this, AllEntriesActivity.class);
             startActivity(goToAll);
             finish();
@@ -160,10 +165,7 @@ public class OpenedActivity extends SimpleActivity {
 
 
 //This method is for manually resetting the list RIP
-   /* public void testThings() {
-
-        Log.d(test, "ENTERED");
-
+    /*public void testThings() {
         List<String> thoughtArraylist = new ArrayList<>();
         thoughtArraylist.clear();
         thoughtArraylist.add(
@@ -206,7 +208,6 @@ public class OpenedActivity extends SimpleActivity {
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         for (int i = 0; i < thoughtArraylist.size(); i++) {
             writer.println(thoughtArraylist.get(i));
-            Log.d(test, thoughtArraylist.get(i));
         }
         writer.close();
      }*/
