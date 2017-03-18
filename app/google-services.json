@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:463805231615:android:9d06a022483cd13e",
         "android_client_info": {
-          "package_name": "com.example.kelseywang.journalx"
+          "package_name": "com.journalxapp.kelseywang.journalx"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "463805231615-p2enjevpa440j7udvmng0srrh7fif398.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.kelseywang.journalx",
+            "package_name": "com.journalxapp.kelseywang.journalx",
             "certificate_hash": "ab28289eb0328e2b913af4d2d31b3f150887e2fc"
           }
         },

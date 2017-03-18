@@ -15,7 +15,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="16dp"
-    tools:context="com.example.kelseywang.journalx.OldEntryActivity"
+    tools:context="com.journalxapp.kelseywang.journalx.OldEntryActivity"
 >
 
     <TextView

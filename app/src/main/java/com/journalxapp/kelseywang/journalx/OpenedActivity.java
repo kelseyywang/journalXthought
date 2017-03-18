@@ -1,4 +1,4 @@
-package com.example.kelseywang.journalx;
+package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.todddavies.components.progressbar.ProgressWheel;
+
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -178,10 +179,10 @@ public class OpenedActivity extends SimpleActivity {
                         "false"
         );
         thoughtArraylist.add(
-                "1 thing you wish you didn't give up:" + "\t" +
-                        "Dance" + "\n" +
-                        "If this was changed, you wouldn't have given that up:" + "\t" +
-                        "If I watched Dance Moms back then..." + "\n"
+                "1 circumstance where you performed better than you practiced:" + "\t" +
+                        "While playing piano" + "\n" +
+                        "How can those circumstances be replicated?" + "\t" +
+                        "Having more pressure?" + "\n"
                         + "2" + "\t" + "10" + "\t" + "2017" + "\t"
                         + "2" + "\t" + "12" + "\t" + "2017" + "\t" +
                         "false"
@@ -200,8 +201,8 @@ public class OpenedActivity extends SimpleActivity {
                         "Impatience with myself" + "\n" +
                         "What would you invent to make that easier?" + "\t" +
                         "An app that promotes productive self-reflection... lmao" + "\n"
-                        + "2" + "\t" + "13" + "\t" + "2017" + "\t"
-                        + "2" + "\t" + "13" + "\t" + "2017" + "\t" +
+                        + "2" + "\t" + "12" + "\t" + "2017" + "\t"
+                        + "2" + "\t" + "12" + "\t" + "2017" + "\t" +
                         "false"
         );
 

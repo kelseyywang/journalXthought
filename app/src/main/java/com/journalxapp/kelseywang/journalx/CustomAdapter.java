@@ -1,8 +1,7 @@
-package com.example.kelseywang.journalx;
+package com.journalxapp.kelseywang.journalx;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kelseywang on 3/6/17.

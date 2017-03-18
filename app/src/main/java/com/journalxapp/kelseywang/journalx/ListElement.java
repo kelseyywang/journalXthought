@@ -1,4 +1,4 @@
-package com.example.kelseywang.journalx;
+package com.journalxapp.kelseywang.journalx;
 
 /**
  * Created by kelseywang on 3/6/17.

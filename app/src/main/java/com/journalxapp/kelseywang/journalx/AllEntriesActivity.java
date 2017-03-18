@@ -1,4 +1,4 @@
-package com.example.kelseywang.journalx;
+package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,8 @@ public class AllEntriesActivity extends SimpleActivity {
             "Take a few minutes out of your day to think about yourself in a context " +
                     "that you define. journalx was created with simplicity in mind, " +
                     "prompting you with daily questions that promote both self-reflection and innovative thinking. \n\n" +
-                    "Tap on a thought to edit it. " +
+                    "Tap on a thought to edit it. Prompts are loaded once a day, requiring internet connection, " +
+                    "but offline mode lets you browse and edit old thoughts. \n\n" +
                     "Hold down on a thought to favorite it, and hold down again to un-favorite. " +
                     "Favorited thoughts are elevated in your list.\n\n" +
                     "Questions? Feedback? Email me at askjournalx@gmail.com";

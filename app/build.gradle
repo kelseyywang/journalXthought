@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.kelseywang.journalx"
+        applicationId "com.journalxapp.kelseywang.journalx"
         multiDexEnabled true
         minSdkVersion 15
         targetSdkVersion 25
@@ -20,7 +20,7 @@ android {
         }
         prod {
             // The actual minSdkVersion for the production version.
-            minSdkVersion 14
+            minSdkVersion 15
         }
     }
     buildTypes {

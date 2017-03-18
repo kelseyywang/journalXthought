@@ -1,4 +1,4 @@
-package com.example.kelseywang.journalx;
+package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
 import android.os.Bundle;
