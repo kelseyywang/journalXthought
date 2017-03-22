@@ -1,3 +1,5 @@
+//This class allows user to write their entry
+//for today
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
@@ -8,6 +10,8 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class TodayEntryActivity extends SimpleActivity {
+
+    //Sets layout with dates, questions, etc.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +25,16 @@ public class TodayEntryActivity extends SimpleActivity {
             $ET(R.id.answer_2).setText(myQ2Answer.toString());
         }
     }
+
+    //Saves current text in answer EditTexts in case of orientation change
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putCharSequence("q1Answer", $ET(R.id.answer_1).getText().toString());
         outState.putCharSequence("q2Answer", $ET(R.id.answer_2).getText().toString());
     }
+
+    //Returns current month, day and year in String array
     private int[] calendarDates() {
         Calendar calendar = Calendar.getInstance();
         int[] dates = {calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -34,6 +42,7 @@ public class TodayEntryActivity extends SimpleActivity {
         return dates;
     }
 
+    //Gets questions from intent and sets question TextViews
     private void setQuestions() {
         Intent intent = getIntent();
         String todayQ1 = intent.getStringExtra("q1");
@@ -42,6 +51,7 @@ public class TodayEntryActivity extends SimpleActivity {
         $TV(R.id.question_2).setText(todayQ2);
     }
 
+    //Sets date TextView
     private void setDate() {
         int[] date = calendarDates();
         String m = Integer.toString(date[0] + 1);
@@ -50,6 +60,7 @@ public class TodayEntryActivity extends SimpleActivity {
         $TV(R.id.date_view).setText("Today is: " + m + "/" + d + "/" + y);
     }
 
+    //Adds entry to saved file
     public void saveClicked(View view) {
         PrintStream output = new PrintStream(openFileOutput("thoughtsList.txt", MODE_APPEND));
         String question1 = $TV(R.id.question_1).getText().toString();

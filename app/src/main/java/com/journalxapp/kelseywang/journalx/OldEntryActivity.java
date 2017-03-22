@@ -1,10 +1,9 @@
+//Allows user to modify and save old entries
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,9 +12,10 @@ import java.util.Scanner;
 import stanford.androidlib.*;
 
 public class OldEntryActivity extends SimpleActivity {
-
     private String[] dateCreated;
     private String favorited;
+
+    //Sets text for questions and answers using helper methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,23 +28,31 @@ public class OldEntryActivity extends SimpleActivity {
             $ET(R.id.answer_2).setText(myQ2Answer.toString());
         }
     }
+
+    //Saves current text in answer EditTexts in case of orientation change
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putCharSequence("q1Answer", $ET(R.id.answer_1).getText().toString());
         outState.putCharSequence("q2Answer", $ET(R.id.answer_2).getText().toString());
     }
+
+    //Handles setting text for questions and answers
     private void setAllText() {
         Intent intent = getIntent();
         String thisThought = intent.getStringExtra("thoughtClicked");
         setQuestions(thisThought);
         setAnswers(thisThought);
     }
+
+    //Sets questions
     private void setQuestions(String questions) {
         String[] questionsArray = questions.split("\\r?\\n");
         $TV(R.id.question_1).setText(questionsArray[0]);
         $TV(R.id.question_2).setText(questionsArray[1]);
     }
+
+    //Sets answers by going through saved file
     private void setAnswers(String questions) {
         String answer1 = "";
         String answer2 = "";
@@ -73,17 +81,20 @@ public class OldEntryActivity extends SimpleActivity {
             $ET(R.id.answer_1).setText(answer1);
             $ET(R.id.answer_2).setText(answer2);
         } catch (Exception e) {
-            // do nothing
         }
     }
 
+    //Stores date, month, year created in a private class variable
     private void storeDateCreated(String mc, String dc, String yc) {
         dateCreated = new String[]{mc, dc, yc};
     }
+
+    //Stores whether entry was favorited
     private void storeFavorited(String wasFavorited) {
         favorited = wasFavorited;
     }
 
+    //Sets date TextViews on top of page
     private void setDates(String mc, String dc, String yc, String mm, String dm, String ym) {
         $TV(R.id.date_created).setText("Entry from " + Integer.toString(Integer.parseInt(mc) + 1) + "/" + dc + "/" + yc);
         if(!mm.isEmpty() && !(mm.equals(mc) && dm.equals(dc) && ym.equals(yc))) {
@@ -91,12 +102,13 @@ public class OldEntryActivity extends SimpleActivity {
         }
     }
 
-    //Splits parameter string into two
+    //Splits parameter string into two by new line
     private String[] splitLineHelper(String line) {
         String[] QAndA = line.split("\\r?\\n");
         return QAndA;
     }
 
+    //Replaces line from saved file to reflect modifications
     private void replaceLineFromFile(List<String> questionsArraylist, List<String> thoughtsArraylist,
                                      String question, String newAnswer, String question2, String newAnswer2,
                                      String mc, String dc, String yc, String favorited) {
@@ -107,7 +119,7 @@ public class OldEntryActivity extends SimpleActivity {
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         for (int i = 0; i < questionsArraylist.size(); i++) {
             if (splitLineHelper(questionsArraylist.get(i))[0].equals(question)) {
-                //changing date modified to today
+                //Changing date modified to today
                 thoughtsArraylist.set(i, question + "\t" + newAnswer + "\n" + question2 + "\t" + newAnswer2
                         + "\n" + mc + "\t" + dc + "\t" + yc + "\t"
                         + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
@@ -120,6 +132,7 @@ public class OldEntryActivity extends SimpleActivity {
         writer.close();
     }
 
+    //Returns list of entries
     private List<String> getList() {
         List<String> thoughtArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
@@ -149,6 +162,7 @@ public class OldEntryActivity extends SimpleActivity {
         return thoughtArraylist;
     }
 
+    //Returns list of questions from entries
     private List<String> getQuestionsList() {
         List<String> thoughtArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
@@ -176,16 +190,15 @@ public class OldEntryActivity extends SimpleActivity {
         return thoughtArraylist;
     }
 
+    //Saves modifications and transitions to AllEntriesActivity
     public void saveClicked(View view) {
         String question1 = $TV(R.id.question_1).getText().toString();
         String answer1 = $ET(R.id.answer_1).getText().toString();
         String question2 = $TV(R.id.question_2).getText().toString();
         String answer2 = $ET(R.id.answer_2).getText().toString();
-
         replaceLineFromFile(getQuestionsList(), getList(), question1, answer1,
                 question2, answer2, dateCreated[0], dateCreated[1], dateCreated[2], favorited);
-        Intent goToMenu = new Intent(this, AllEntriesActivity.class);
-        startActivity(goToMenu);
+        Intent goToAll = new Intent(this, AllEntriesActivity.class);
+        startActivity(goToAll);
     }
-
 }

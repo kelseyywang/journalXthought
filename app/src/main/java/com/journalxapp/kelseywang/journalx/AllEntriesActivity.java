@@ -1,10 +1,13 @@
+//This class allows user to view all entries, favorites, or help screen
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,20 +19,12 @@ import java.util.*;
 public class AllEntriesActivity extends SimpleActivity {
     private final List<String> MONTHS_ABBREVS = new ArrayList<>(Arrays.asList(
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"));
-    private String test = "APPLICABLE";
     private int indexLongClicked;
     private String currentList;
     private int scrollIndex;
     int scrollTop;
-    private final String HELP_TEXT =
-            "Take a few minutes out of your day to think about yourself in a context " +
-                    "that you define. journalx was created with simplicity in mind, " +
-                    "prompting you with daily questions that promote both self-reflection and innovative thinking. \n\n" +
-                    "Tap on a thought to edit it. Prompts are loaded once a day, requiring internet connection, " +
-                    "but offline mode lets you browse and edit old thoughts. \n\n" +
-                    "Hold down on a thought to favorite it, and hold down again to un-favorite. " +
-                    "Favorited thoughts are colored in your list.\n\n" +
-                    "Questions? Feedback? Email me at askjournalx@gmail.com";
+
+    //Displays current screen (all, favorites, or help)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,18 +43,21 @@ public class AllEntriesActivity extends SimpleActivity {
         $LV(R.id.thought_list).setOnItemLongClickListener(this);
     }
 
+    //Saves screen type when orientation changes
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putCharSequence("currentList", currentList);
     }
 
+    //Creates menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.favorite, menu);
         return true;
     }
 
+    //Changes screen displayed when menu item clicked
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -74,11 +72,11 @@ public class AllEntriesActivity extends SimpleActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //Sets views and calls setList to set all and favorites
     public void setView(String type) {
         currentList = type;
         if(type.equals("All")) {
@@ -95,9 +93,12 @@ public class AllEntriesActivity extends SimpleActivity {
         else {
             $TV(R.id.help_textview).setVisibility(View.VISIBLE);
             $TV(R.id.all_entries_header).setText("Help");
+            String HELP_TEXT = getResources().getString(R.string.help_string);
             $TV(R.id.help_textview).setText(HELP_TEXT);
         }
     }
+
+    //First time user opens the screen, instructions are shown
     private void showInstructions() {
         SharedPreferences prefs = getSharedPreferences("ratings.txt", Context.MODE_PRIVATE);
         String isFirstOpen = prefs.getString("first open", "true");
@@ -109,6 +110,7 @@ public class AllEntriesActivity extends SimpleActivity {
         }
     }
 
+    //Transitions to a specific entry if it is clicked
     @Override
     public void onItemClick(ListView list, int index) {
         ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
@@ -118,6 +120,7 @@ public class AllEntriesActivity extends SimpleActivity {
         startActivity(goToEntry);
     }
 
+    //Returns current list of entries
     private List<String> getList(String whatList) {
         List<String> retArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
@@ -151,11 +154,11 @@ public class AllEntriesActivity extends SimpleActivity {
                 }
             }
         } catch (Exception e) {
-            // do nothing
         }
         return retArraylist;
     }
 
+    //Returns questions list with month and date info attached
     private List<String> getQuestionsListWithMonthsDates(String whatList) {
         List<String> retArraylist = new ArrayList<>();
         String q1, a1, q2, a2;
@@ -178,7 +181,8 @@ public class AllEntriesActivity extends SimpleActivity {
         return retArraylist;
     }
 
-    //Sets list
+    //Sets list - either all or favorites, changes color for
+    //favorited items
     private void setList(String whatList) {
         ArrayList<ListElement> objects = new ArrayList<>();
         List<String> questionsWithDatesMonths = getQuestionsListWithMonthsDates(whatList);
@@ -202,20 +206,30 @@ public class AllEntriesActivity extends SimpleActivity {
         $LV(R.id.thought_list).setAdapter(customAdapter);
     }
 
+    //When a list item is long clicked, it is favorited,
+    //list is reset, and scroll is set to same position as before
     @Override
     public boolean onItemLongClick(ListView list, int index) {
-        scrollIndex = list.getFirstVisiblePosition();
-        View v = list.getChildAt(0);
-        scrollTop = (v == null) ? 0 : (v.getTop() - list.getPaddingTop());
-
-        int backwardsIndex = list.getAdapter().getCount() - 1 - index;
-        indexLongClicked = backwardsIndex;
-        setFavorited();
-        setList(currentList);
-        list.setSelectionFromTop(scrollIndex, scrollTop);
+        if(currentList.equals("All")) {
+            scrollIndex = list.getFirstVisiblePosition();
+            View v = list.getChildAt(0);
+            scrollTop = (v == null) ? 0 : (v.getTop() - list.getPaddingTop());
+            int backwardsIndex = list.getAdapter().getCount() - 1 - index;
+            indexLongClicked = backwardsIndex;
+            Log.d("indexLongClicked", Integer.toString(indexLongClicked));
+            setFavorited();
+            setList(currentList);
+            list.setSelectionFromTop(scrollIndex, scrollTop);
+        }
+        else {
+            toast("You can only unfavorite entries in All Thoughts.");
+        }
         return true;
+
     }
 
+    //Calls appropriate helper function to either unfavorite or
+    //favorite an entry
     private void setFavorited() {
         List<String> thoughtsArraylist = getList("All");
         String indexFavorited = splitOneEntryLine(thoughtsArraylist.get(indexLongClicked))[10];
@@ -225,13 +239,16 @@ public class AllEntriesActivity extends SimpleActivity {
         else {
             replaceFavoritedInThoughtsList(thoughtsArraylist, indexLongClicked, "true");
         }
-
     }
+
+    //Splits a string separated by tabs or new lines
     private String[] splitOneEntryLine(String line) {
         String[] retval = line.split("\\t|\\n");
         return retval;
     }
 
+    //Sets an entry to either favorited or unfavorited in the
+    //saved file
     private void replaceFavoritedInThoughtsList(List<String> thoughtsArraylist,
                                      int index, String favorited) {
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
@@ -246,4 +263,3 @@ public class AllEntriesActivity extends SimpleActivity {
         writer.close();
     }
 }
-

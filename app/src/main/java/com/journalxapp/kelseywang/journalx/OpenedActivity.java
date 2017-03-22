@@ -1,3 +1,6 @@
+//This class loads new questions if it is the first time
+//the user opened the app today. Otherwise, transitions
+//to all entries.
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
@@ -10,64 +13,55 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.todddavies.components.progressbar.ProgressWheel;
-
 import java.util.Calendar;
 import java.util.Scanner;
-
 import stanford.androidlib.SimpleActivity;
 import stanford.androidlib.util.RandomGenerator;
 
 public class OpenedActivity extends SimpleActivity {
     private final int START_DAY_OF_YEAR = 67; //should be day which app is launched - 1
     private String q1, q2;
-    private String test = "a";
     private int month, day, year;
-    private String[] OPENING_QUOTES = {"\"In order to understand the world, one has to turn away from it on occasion.\"\n-Albert Camus",
-            "\"Knowing yourself is the beginning of all wisdom.\"\n-Aristotle",
-    "\"The only journey is the one within.\"\n-Rainer Maria Rilke",
-    "\"A man wrapped up in himself makes a very small parcel.\"\n-John Ruskin",
-    "\"Nothing is forever. Except atoms.\"\n-Dannika Dark",
-    "\"Self is a sea boundless and measureless.\"\n-Kahlil Gibran",
-    "\"Wherever you go, you take yourself with you. If you see what I mean.\"\n-Neil Gaiman",
-    "\"The world should be a mirror that you reflect upon.\"\n-C. JoyBell C.",
-    "\"When all think alike, then no one is thinking.\"\n-Walter Lippman",
-    "\"To think creatively, we must be able to look afresh at what we normally take for granted.\"\n-George Kneller",
-    "\"The best way to have a good idea is to have a lot of ideas.\"\n-Linus Pauling",
-    "\"Discovery consists of seeing what everybody has seen and thinking what nobody has thought.\"\n-Albert von Szent-Gyorgy",
-    "\"To regard old problems from a new angle, requires creative imagination and marks real advance in science.\"\n-Albert Einstein",
-    "\"There's a way to do it better — find it.\"\n-Thomas Edison"};
 
+    //Sets a quote, calls helper methods to handle transitions,
+    //spins the ProgressWheel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
         //testThings();
         RandomGenerator rand = new RandomGenerator();
+        String[] OPENING_QUOTES = getResources().getStringArray(R.array.opening_quotes);
+        Log.d("quote is ", OPENING_QUOTES[rand.nextInt(0, OPENING_QUOTES.length - 1)]);
         $TV(R.id.quote).setText(OPENING_QUOTES[rand.nextInt(0, OPENING_QUOTES.length - 1)]);
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         year = calendar.get(Calendar.YEAR);
-
-
         ProgressWheel pw = (ProgressWheel) findViewById(R.id.pw_spinner);
         pw.startSpinning();
-
         if (wroteEntryToday(month, day, year)) {
-            Intent goToAll = new Intent(this, AllEntriesActivity.class);
-            startActivity(goToAll);
-            finish();
+            intentToAll();
         }
         setQuestions(dayOfYear);
     }
 
+    //If loading takes too long and user clicks to open offline,
+    //transitions to all
     public void offlineClicked(View view) {
+        intentToAll();
+    }
+
+    //Handles intent to transition to AllEntriesActivity
+    private void intentToAll() {
         Intent goToAll = new Intent(this, AllEntriesActivity.class);
         startActivity(goToAll);
         finish();
     }
 
+    //Gets questions from Firebase and sets private class
+    //variables to the questions
     private void setQuestions(int day) {
         final DatabaseReference fb = FirebaseDatabase
                 .getInstance().getReference();
@@ -104,6 +98,8 @@ public class OpenedActivity extends SimpleActivity {
         );
     }
 
+    //Sets first question and transitions to TodayEntryActivity
+    //if both Q1 and Q2 are set
     private void setQ1(String myQ1) {
         if (myQ1 != null) {
             q1 = myQ1;
@@ -117,6 +113,8 @@ public class OpenedActivity extends SimpleActivity {
         }
     }
 
+    //Sets second question and transitions to TodayEntryActivity
+    //if both Q1 and Q2 are set
     private void setQ2(String myQ2) {
         if (myQ2 != null) {
             q2 = myQ2;
@@ -130,10 +128,9 @@ public class OpenedActivity extends SimpleActivity {
         }
     }
 
-    //If the app has already been opened today, there wil already be
+    //If the app has already been opened today, there will already be
     //an entry for the daily questions and will return true
     private boolean wroteEntryToday(int month, int day, int year) {
-
         String q1, a1, q2, a2;
         String mc, dc, yc,
                 mm, dm, ym, favorited;
@@ -165,7 +162,7 @@ public class OpenedActivity extends SimpleActivity {
 
 
 
-//This method is for manually resetting the list RIP
+//This method is for manually resetting the list
     /*public void testThings() {
         List<String> thoughtArraylist = new ArrayList<>();
         thoughtArraylist.clear();

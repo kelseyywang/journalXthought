@@ -1,3 +1,4 @@
+//This is my adapter for the ListView
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Context;
@@ -15,14 +16,11 @@ import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.ArrayList;
 
-/**
- * Created by kelseywang on 3/6/17.
- */
-
 public class CustomAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<ListElement> objects;
 
+    //Defines the ViewHolder
     private class ViewHolder {
         CardView card_view;
         TextView q1_tv;
@@ -31,23 +29,28 @@ public class CustomAdapter extends BaseAdapter {
         ImageView image_view;
     }
 
+    //Constructor for this CustomAdaptor
     public CustomAdapter(Context context, ArrayList<ListElement> objects) {
         inflater = LayoutInflater.from(context);
         this.objects = objects;
     }
 
+    //Returns the count of objects
     public int getCount() {
         return objects.size();
     }
 
+    //Returns item as specified position
     public ListElement getItem(int position) {
         return objects.get(position);
     }
 
+    //Returns item's index as id
     public long getItemId(int position) {
         return position;
     }
 
+    //returns the View with list elements set appropriately
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if(convertView == null) {

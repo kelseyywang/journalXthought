@@ -40,8 +40,9 @@
         android:id="@+id/help_textview"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/green1"
-        android:textSize="18dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="16dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

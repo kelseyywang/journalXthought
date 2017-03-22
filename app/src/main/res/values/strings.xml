@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">journalx</string>
+<string-array
+    name="opening_quotes">
+            <item>\"In order to understand the world, one has to turn away from it on occasion.\"\n-Albert Camus</item>
+            <item>"\"Knowing yourself is the beginning of all wisdom.\"\n-Aristotle"</item>
+            <item>"\"The only journey is the one within.\"\n-Rainer Maria Rilke"</item>
+            <item>"\"A man wrapped up in himself makes a very small parcel.\"\n-John Ruskin"</item>
+            <item>"\"Nothing is forever. Except atoms.\"\n-Dannika Dark"</item>
+            <item>"\"Self is a sea boundless and measureless.\"\n-Kahlil Gibran"</item>
+            <item>"\"Wherever you go, you take yourself with you. If you see what I mean.\"\n-Neil Gaiman"</item>
+            <item>"\"The world should be a mirror that you reflect upon.\"\n-C. JoyBell C."</item>
+            <item>"\"When all think alike, then no one is thinking.\"\n-Walter Lippman"</item>
+            <item>"\"To think creatively, we must be able to look afresh at what we normally take for granted.\"\n-George Kneller"</item>
+            <item>"\"The best way to have a good idea is to have a lot of ideas.\"\n-Linus Pauling"</item>
+            <item>"\"Discovery consists of seeing what everybody has seen and thinking what nobody has thought.\"\n-Albert von Szent-Gyorgy"</item>
+            <item>"\"To regard old problems from a new angle, requires creative imagination and marks real advance in science.\"\n-Albert Einstein"</item>
+            <item>"\"There's a way to do it better — find it.\"\n-Thomas Edison"</item>
+</string-array>
+    <string name="help_string">"Take a few minutes out of your day to think about yourself in a context"
+                    "that you define. journalx was created with simplicity in mind, "
+                    "prompting you with daily questions that promote both self-reflection and innovative thinking. \n\n"
+                    "Tap on a thought to edit it. Prompts are loaded once a day, requiring internet connection, "
+                    "but offline mode lets you browse and edit old thoughts. \n\n"
+                    "Hold down on a thought to favorite it, and hold down again to un-favorite. "
+                    "Favorited thoughts are colored in your list.\n\n"
+                    "Questions? Feedback? Email me at askjournalx@gmail.com"</string>
 </resources>
+
