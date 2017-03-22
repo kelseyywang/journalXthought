@@ -1,6 +1,8 @@
 package com.journalxapp.kelseywang.journalx;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,6 +19,8 @@ public class AllEntriesActivity extends SimpleActivity {
     private String test = "APPLICABLE";
     private int indexLongClicked;
     private String currentList;
+    private int scrollIndex;
+    int scrollTop;
     private final String HELP_TEXT =
             "Take a few minutes out of your day to think about yourself in a context " +
                     "that you define. journalx was created with simplicity in mind, " +
@@ -24,7 +28,7 @@ public class AllEntriesActivity extends SimpleActivity {
                     "Tap on a thought to edit it. Prompts are loaded once a day, requiring internet connection, " +
                     "but offline mode lets you browse and edit old thoughts. \n\n" +
                     "Hold down on a thought to favorite it, and hold down again to un-favorite. " +
-                    "Favorited thoughts are elevated in your list.\n\n" +
+                    "Favorited thoughts are colored in your list.\n\n" +
                     "Questions? Feedback? Email me at askjournalx@gmail.com";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class AllEntriesActivity extends SimpleActivity {
         else {
             setView("All");
         }
+        showInstructions();
         Toolbar myToolbar = (Toolbar) findViewById(R.id.all_entries_toolbar);
         setSupportActionBar(myToolbar);
         $LV(R.id.thought_list).setOnItemClickListener(this);
@@ -91,6 +96,16 @@ public class AllEntriesActivity extends SimpleActivity {
             $TV(R.id.help_textview).setVisibility(View.VISIBLE);
             $TV(R.id.all_entries_header).setText("Help");
             $TV(R.id.help_textview).setText(HELP_TEXT);
+        }
+    }
+    private void showInstructions() {
+        SharedPreferences prefs = getSharedPreferences("ratings.txt", Context.MODE_PRIVATE);
+        String isFirstOpen = prefs.getString("first open", "true");
+        if (isFirstOpen.equals("true") && $LV(R.id.thought_list).getAdapter().getCount() < 2) {
+            $TV(R.id.first_instructions).setVisibility(View.VISIBLE);
+            SharedPreferences.Editor prefsEditor = prefs.edit();
+            prefsEditor.putString("first open", "false");
+            prefsEditor.commit();
         }
     }
 
@@ -167,19 +182,19 @@ public class AllEntriesActivity extends SimpleActivity {
     private void setList(String whatList) {
         ArrayList<ListElement> objects = new ArrayList<>();
         List<String> questionsWithDatesMonths = getQuestionsListWithMonthsDates(whatList);
-        for (String questionWithDateMonth : questionsWithDatesMonths) {
+        for (int i = questionsWithDatesMonths.size() - 1; i >= 0; i--) {
+            String questionWithDateMonth = questionsWithDatesMonths.get(i);
             String[] elements = questionWithDateMonth.split("\\r?\\n");
-            int elevation;
+            int color = 0;
             if (whatList.equals("All")) {
-                elevation = 5;
                 if (elements[4].equals("true")) {
-                    elevation = 20;
+                    color = 1;
                 }
             }
             else {
-                elevation = 20;
+                color = 1;
             }
-            ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3], elevation);
+            ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3], color);
             objects.add(newElement);
         }
 
@@ -189,13 +204,19 @@ public class AllEntriesActivity extends SimpleActivity {
 
     @Override
     public boolean onItemLongClick(ListView list, int index) {
-        indexLongClicked = index;
-        setFavorited(list, index);
+        scrollIndex = list.getFirstVisiblePosition();
+        View v = list.getChildAt(0);
+        scrollTop = (v == null) ? 0 : (v.getTop() - list.getPaddingTop());
+
+        int backwardsIndex = list.getAdapter().getCount() - 1 - index;
+        indexLongClicked = backwardsIndex;
+        setFavorited();
         setList(currentList);
+        list.setSelectionFromTop(scrollIndex, scrollTop);
         return true;
     }
 
-    private void setFavorited(ListView list, int index) {
+    private void setFavorited() {
         List<String> thoughtsArraylist = getList("All");
         String indexFavorited = splitOneEntryLine(thoughtsArraylist.get(indexLongClicked))[10];
         if(indexFavorited.equals("true")) {

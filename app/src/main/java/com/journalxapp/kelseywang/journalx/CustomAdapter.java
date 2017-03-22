@@ -3,6 +3,7 @@ package com.journalxapp.kelseywang.journalx;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,11 @@ public class CustomAdapter extends BaseAdapter {
                 .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 25);
         holder.month.setText(objects.get(position).getMonth());
         holder.image_view.setImageDrawable(drawable);
-        holder.card_view.setCardElevation(objects.get(position).getElevation()/1.0f);
+        int colorInt = objects.get(position).getColor();
+
+        if (colorInt == 1) {
+            holder.card_view.setCardBackgroundColor(Color.parseColor("#dce2f7"));
+        }
         return convertView;
     }
 }

@@ -14,8 +14,19 @@ public class TodayEntryActivity extends SimpleActivity {
         setContentView(R.layout.activity_today_entry);
         setDate();
         setQuestions();
+        if (savedInstanceState != null) {
+            CharSequence myQ1Answer = savedInstanceState.getCharSequence("q1Answer");
+            CharSequence myQ2Answer = savedInstanceState.getCharSequence("q2Answer");
+            $ET(R.id.answer_1).setText(myQ1Answer.toString());
+            $ET(R.id.answer_2).setText(myQ2Answer.toString());
+        }
     }
-
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("q1Answer", $ET(R.id.answer_1).getText().toString());
+        outState.putCharSequence("q2Answer", $ET(R.id.answer_2).getText().toString());
+    }
     private int[] calendarDates() {
         Calendar calendar = Calendar.getInstance();
         int[] dates = {calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),

@@ -3,6 +3,8 @@ package com.journalxapp.kelseywang.journalx;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +21,18 @@ public class OldEntryActivity extends SimpleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_entry);
         setAllText();
+        if (savedInstanceState != null) {
+            CharSequence myQ1Answer = savedInstanceState.getCharSequence("q1Answer");
+            CharSequence myQ2Answer = savedInstanceState.getCharSequence("q2Answer");
+            $ET(R.id.answer_1).setText(myQ1Answer.toString());
+            $ET(R.id.answer_2).setText(myQ2Answer.toString());
+        }
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("q1Answer", $ET(R.id.answer_1).getText().toString());
+        outState.putCharSequence("q2Answer", $ET(R.id.answer_2).getText().toString());
     }
     private void setAllText() {
         Intent intent = getIntent();

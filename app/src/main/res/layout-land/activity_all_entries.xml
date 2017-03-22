@@ -41,6 +41,9 @@
         android:textColor="@color/green1"
         android:textSize="18dp"
         android:gravity="center_horizontal"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:id="@+id/thought_list"
         android:layout_width="match_parent"
@@ -49,4 +52,19 @@
         android:dividerHeight="0dp"
         android:scrollbars="none">
     </ListView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:gravity="center"
+        android:textColor="@color/green1"
+        android:text="Looks like you're new here! Click on an entry to edit it, or long click it to favorite!\nSee the menu above on the right for more options."
+        android:paddingTop="150dp"
+        android:fontFamily="sans-serif-light"
+        android:textSize="15dp"
+        android:visibility="gone"
+        android:id="@+id/first_instructions"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"/>
+</FrameLayout>
 </LinearLayout>
