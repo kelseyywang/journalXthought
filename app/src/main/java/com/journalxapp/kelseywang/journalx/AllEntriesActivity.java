@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import stanford.androidlib.*;
 import java.io.PrintStream;
@@ -29,6 +31,10 @@ public class AllEntriesActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_entries);
+        List<String> stuff = getList("All");
+        for(String i : stuff) {
+            //Log.d("element:", i);
+        }
         if (savedInstanceState != null) {
             CharSequence currList = savedInstanceState.getCharSequence("currentList");
             setView(currList.toString());
@@ -114,7 +120,7 @@ public class AllEntriesActivity extends SimpleActivity {
     @Override
     public void onItemClick(ListView list, int index) {
         ListElement itemsAtPosition = (ListElement) list.getItemAtPosition(index);
-        String thoughtClicked = itemsAtPosition.getQ1() + "\n" + itemsAtPosition.getQ2();
+        String thoughtClicked = itemsAtPosition.getQ1() + "@@@@" + itemsAtPosition.getQ2();
         Intent goToEntry = new Intent(this, OldEntryActivity.class);
         goToEntry.putExtra("thoughtClicked", thoughtClicked);
         startActivity(goToEntry);
@@ -127,7 +133,7 @@ public class AllEntriesActivity extends SimpleActivity {
         String mc, dc, yc,
                 mm, dm, ym, favorited;
         try {
-            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
+            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("@@@@");
             while (scanner.hasNext()) {
                 q1 = scanner.next();
                 a1 = scanner.next();
@@ -141,15 +147,24 @@ public class AllEntriesActivity extends SimpleActivity {
                 ym = scanner.next();
                 favorited = scanner.next();
                 if(whatList.equals("All")) {
-                    retArraylist.add(q1 + "\t" + a1 + "\n" + q2 + "\t" + a2 + "\n"
-                            + mc + "\t" + dc + "\t" + yc + "\t"
-                            + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
+                    retArraylist.add(q1 + "@@@@" + a1 + "@@@@" + q2 + "@@@@" + a2 + "@@@@"
+                            + mc + "@@@@" + dc + "@@@@" + yc + "@@@@"
+                            + mm + "@@@@" + dm + "@@@@" + ym + "@@@@" + favorited);
+                    /*Log.d("adding", q1 + "@@@@" + a1 + "@@@@" + q2 + "@@@@" + a2 + "@@@@"
+                            + mc + "@@@@" + dc + "@@@@" + yc + "@@@@"
+                            + mm + "@@@@" + dm + "@@@@" + ym + "@@@@" + favorited + "END");
+                    */Log.d("q1 IS ", q1);
+                    Log.d("a1 IS ", a1);
+                    Log.d("q2 IS ", q2);
+                    Log.d("a2 IS ", a2);
+                    Log.d("ym IS ", ym);
+                    Log.d("FAVORITE IS ", favorited);
                 }
                 else if (whatList.equals("Favorited")) {
                     if(favorited.equals("true")) {
-                        retArraylist.add(q1 + "\t" + a1 + "\n" + q2 + "\t" + a2 + "\n"
-                                + mc + "\t" + dc + "\t" + yc + "\t"
-                                + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
+                        retArraylist.add(q1 + "@@@@" + a1 + "@@@@" + q2 + "@@@@" + a2 + "@@@@"
+                                + mc + "@@@@" + dc + "@@@@" + yc + "@@@@"
+                                + mm + "@@@@" + dm + "@@@@" + ym + "@@@@" + favorited);
                     }
                 }
             }
@@ -161,9 +176,6 @@ public class AllEntriesActivity extends SimpleActivity {
     //Returns questions list with month and date info attached
     private List<String> getQuestionsListWithMonthsDates(String whatList) {
         List<String> retArraylist = new ArrayList<>();
-        String q1, a1, q2, a2;
-        String mc, dc, yc,
-                mm, dm, ym, favorited;
         List<String> origList;
         if(whatList.equals("All")) {
             origList = getList("All");
@@ -176,7 +188,7 @@ public class AllEntriesActivity extends SimpleActivity {
         }
         for(String element : origList) {
             String[] split = splitOneEntryLine(element);
-            retArraylist.add(split[0] + "\n" + split[2] + "\n" + MONTHS_ABBREVS.get(Integer.parseInt(split[4])) + "\n" + split[5] + "\n" + split[10]);
+            retArraylist.add(split[0] + "@@@@" + split[2] + "@@@@" + MONTHS_ABBREVS.get(Integer.parseInt(split[4])) + "@@@@" + split[5] + "@@@@" + split[10]);
         }
         return retArraylist;
     }
@@ -188,7 +200,7 @@ public class AllEntriesActivity extends SimpleActivity {
         List<String> questionsWithDatesMonths = getQuestionsListWithMonthsDates(whatList);
         for (int i = questionsWithDatesMonths.size() - 1; i >= 0; i--) {
             String questionWithDateMonth = questionsWithDatesMonths.get(i);
-            String[] elements = questionWithDateMonth.split("\\r?\\n");
+            String[] elements = questionWithDateMonth.split("@@@@");
             int color = 0;
             if (whatList.equals("All")) {
                 if (elements[4].equals("true")) {
@@ -199,6 +211,11 @@ public class AllEntriesActivity extends SimpleActivity {
                 color = 1;
             }
             ListElement newElement = new ListElement(elements[0], elements[1], elements[2], elements[3], color);
+            Log.d("element 0", elements[0]);
+            Log.d("element 1", elements[1]);
+            Log.d("element 2", elements[2]);
+            Log.d("element 3", elements[3]);
+
             objects.add(newElement);
         }
 
@@ -216,7 +233,6 @@ public class AllEntriesActivity extends SimpleActivity {
             scrollTop = (v == null) ? 0 : (v.getTop() - list.getPaddingTop());
             int backwardsIndex = list.getAdapter().getCount() - 1 - index;
             indexLongClicked = backwardsIndex;
-            Log.d("indexLongClicked", Integer.toString(indexLongClicked));
             setFavorited();
             setList(currentList);
             list.setSelectionFromTop(scrollIndex, scrollTop);
@@ -243,7 +259,7 @@ public class AllEntriesActivity extends SimpleActivity {
 
     //Splits a string separated by tabs or new lines
     private String[] splitOneEntryLine(String line) {
-        String[] retval = line.split("\\t|\\n");
+        String[] retval = line.split("@@@@");
         return retval;
     }
 
@@ -253,12 +269,12 @@ public class AllEntriesActivity extends SimpleActivity {
                                      int index, String favorited) {
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         String[] line = splitOneEntryLine(thoughtsArraylist.get(index));
-        thoughtsArraylist.set(index, line[0] + "\t" + line[1] + "\n" + line[2] + "\t" + line[3]
-                + "\n" + line[4] + "\t" + line[5] + "\t" + line[6] + "\t"
-                + line[7] + "\t" + line[8] + "\t" + line[9] + "\t" + favorited);
+        thoughtsArraylist.set(index, line[0] + "@@@@" + line[1] + "@@@@" + line[2] + "@@@@" + line[3]
+                + "@@@@" + line[4] + "@@@@" + line[5] + "@@@@" + line[6] + "@@@@"
+                + line[7] + "@@@@" + line[8] + "@@@@" + line[9] + "@@@@" + favorited);
 
         for (int i = 0; i < thoughtsArraylist.size(); i++) {
-            writer.println(thoughtsArraylist.get(i));
+            writer.print(thoughtsArraylist.get(i) + "@@@@");
         }
         writer.close();
     }

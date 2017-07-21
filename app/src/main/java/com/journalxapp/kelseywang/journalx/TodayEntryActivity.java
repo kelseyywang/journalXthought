@@ -1,5 +1,11 @@
 //This class allows user to write their entry
 //for today
+
+//TODO: all files: make sure every end of entry in list or file line has delimiter
+//make sure delimiter and split line is set to appropriate delimiter (search \n or \\ or \\r or ?)
+//make sure all delimiters are there
+//TODO: DELETE TESTTHINGS!!! and add replacements for existing users
+//TODO: IT IS NEWLINE-ING, MESSING UP THE UI
 package com.journalxapp.kelseywang.journalx;
 
 import android.content.Intent;
@@ -73,15 +79,13 @@ public class TodayEntryActivity extends SimpleActivity {
         String dc = Integer.toString(date[1]);
         String yc = Integer.toString(date[2]);
 
-        output.println(question1 + "\t" + answer1);
-        output.println(question2 + "\t" + answer2);
-
         //attaching the month, day of month, and year entry
         //was created, followed immediately by date modified
         //(empty string are placeholders before modification
         //and favorited
-        output.println(mc + "\t" + dc + "\t" + yc + "\t" +
-                "" + "\t" + "" + "\t" + "" + "\t" + "false");
+        output.print(question1 + "@@@@" + answer1 + "@@@@" + question2 + "@@@@" + answer2 + "@@@@"
+                + mc + "@@@@" + dc + "@@@@" + yc + "@@@@" +
+                "" + "@@@@" + "" + "@@@@" + "" + "@@@@" + "false" + "@@@@");
         output.close();
         Intent goToMenu = new Intent(this, AllEntriesActivity.class);
         startActivity(goToMenu);

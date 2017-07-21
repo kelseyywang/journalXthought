@@ -67,6 +67,7 @@ public class CustomAdapter extends BaseAdapter {
         }
         holder.q1_tv.setText(objects.get(position).getQ1());
         holder.q2_tv.setText(objects.get(position).getQ2());
+
         TextDrawable drawable = TextDrawable.builder()
                 .buildRoundRect(objects.get(position).getDrawableChar(), Color.parseColor("#6d87ce"), 25);
         holder.month.setText(objects.get(position).getMonth());

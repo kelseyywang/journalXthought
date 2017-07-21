@@ -13,13 +13,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.todddavies.components.progressbar.ProgressWheel;
+
 import java.util.Calendar;
 import java.util.Scanner;
 import stanford.androidlib.SimpleActivity;
 import stanford.androidlib.util.RandomGenerator;
 
 public class OpenedActivity extends SimpleActivity {
-    private final int START_DAY_OF_YEAR = 67; //should be day which app is launched - 1
+    private final int START_DAY_OF_YEAR = 201; //should be day which app is launched - 1
     private String q1, q2;
     private int month, day, year;
 
@@ -29,10 +30,8 @@ public class OpenedActivity extends SimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opened);
-        //testThings();
         RandomGenerator rand = new RandomGenerator();
         String[] OPENING_QUOTES = getResources().getStringArray(R.array.opening_quotes);
-        Log.d("quote is ", OPENING_QUOTES[rand.nextInt(0, OPENING_QUOTES.length - 1)]);
         $TV(R.id.quote).setText(OPENING_QUOTES[rand.nextInt(0, OPENING_QUOTES.length - 1)]);
         Calendar calendar = Calendar.getInstance();
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
@@ -135,7 +134,7 @@ public class OpenedActivity extends SimpleActivity {
         String mc, dc, yc,
                 mm, dm, ym, favorited;
         try {
-            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
+            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("@@@@");
             while (scanner.hasNext()) {
                 q1 = scanner.next();
                 a1 = scanner.next();
@@ -150,7 +149,6 @@ public class OpenedActivity extends SimpleActivity {
                 favorited = scanner.next();
                 if (mc.equals(Integer.toString(month)) && dc.equals(Integer.toString(day))
                         && yc.equals(Integer.toString(year))) {
-
                     return true;
                 }
             }
@@ -167,45 +165,45 @@ public class OpenedActivity extends SimpleActivity {
         List<String> thoughtArraylist = new ArrayList<>();
         thoughtArraylist.clear();
         thoughtArraylist.add(
-                "1 place where you form your most creative ideas:" + "\t" +
-                    "The shower!" + "\n" +
-                        "What's unique about this space that allows it to be like that?" + "\t" +
-                        "I am forced to stop and think about nothing except what I want to" + "\n"
-                        + "2" + "\t" + "9" + "\t" + "2017" + "\t"
-                        + "2" + "\t" + "10" + "\t" + "2017" + "\t" +
+                "A place where you form your most creative ideas:" + "@@@@" +
+                    "The shower!" + "@@@@" +
+                        "What's different about this space that allows it to be like that?" + "@@@@" +
+                        "I am forced to stop and think about nothing except what I want to" + "@@@@"
+                        + "2" + "@@@@" + "9" + "@@@@" + "2017" + "@@@@"
+                        + "2" + "@@@@" + "10" + "@@@@" + "2017" + "@@@@" +
                         "false"
         );
         thoughtArraylist.add(
-                "1 circumstance where you performed better than you practiced:" + "\t" +
-                        "While playing piano" + "\n" +
-                        "How can those circumstances be replicated?" + "\t" +
-                        "Having more pressure?" + "\n"
-                        + "2" + "\t" + "10" + "\t" + "2017" + "\t"
-                        + "2" + "\t" + "12" + "\t" + "2017" + "\t" +
+                "A circumstance where you did better than you practiced:" + "@@@@" +
+                        "While playing piano" + "@@@@" +
+                        "How can you replicate that?" + "@@@@" +
+                        "Having more pressure?" + "@@@@"
+                        + "2" + "@@@@" + "10" + "@@@@" + "2017" + "@@@@"
+                        + "2" + "@@@@" + "12" + "@@@@" + "2017" + "@@@@" +
                         "false"
         );
         thoughtArraylist.add(
-                "1 way to re-motivate yourself after failure:" + "\t" +
-                        "remind yourself of your potential" + "\n" +
-                        "Similarly, how can you re-motivate a team after failure?" + "\t" +
-                        "let all team members know their individual worth and contributions" + "\n"
-                        + "2" + "\t" + "11" + "\t" + "2017" + "\t"
-                        + "2" + "\t" + "11" + "\t" + "2017" + "\t" +
+                "A way to re-motivate yourself after failure:" + "@@@@" +
+                        "remind yourself of your potential" + "@@@@" +
+                        "How can you re-motivate a team after failure?" + "@@@@" +
+                        "let all team members know their individual worth and contributions" + "@@@@"
+                        + "2" + "@@@@" + "11" + "@@@@" + "2017" + "@@@@"
+                        + "2" + "@@@@" + "11" + "@@@@" + "2017" + "@@@@" +
                         "false"
         );
         thoughtArraylist.add(
-                "1 personality trait you are currently trying to improve:" + "\t" +
-                        "Impatience with myself" + "\n" +
-                        "What would you invent to make that easier?" + "\t" +
-                        "An app that promotes productive self-reflection... lmao" + "\n"
-                        + "2" + "\t" + "12" + "\t" + "2017" + "\t"
-                        + "2" + "\t" + "12" + "\t" + "2017" + "\t" +
+                "A personality trait you are currently trying to improve:" + "@@@@" +
+                        "Impatience with myself" + "@@@@" +
+                        "What would you invent to make that better?" + "@@@@" +
+                        "An app that promotes productive self-reflection... lmao" + "@@@@"
+                        + "2" + "@@@@" + "12" + "@@@@" + "2017" + "@@@@"
+                        + "2" + "@@@@" + "12" + "@@@@" + "2017" + "@@@@" +
                         "false"
         );
 
         PrintStream writer = new PrintStream(openFileOutput("thoughtsList.txt", MODE_PRIVATE));
         for (int i = 0; i < thoughtArraylist.size(); i++) {
-            writer.println(thoughtArraylist.get(i));
+            writer.println(thoughtArraylist.get(i) + "@@@@");
         }
         writer.close();
      }*/

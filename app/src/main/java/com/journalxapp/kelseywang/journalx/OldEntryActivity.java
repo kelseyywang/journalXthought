@@ -47,7 +47,7 @@ public class OldEntryActivity extends SimpleActivity {
 
     //Sets questions
     private void setQuestions(String questions) {
-        String[] questionsArray = questions.split("\\r?\\n");
+        String[] questionsArray = questions.split("@@@@");
         $TV(R.id.question_1).setText(questionsArray[0]);
         $TV(R.id.question_2).setText(questionsArray[1]);
     }
@@ -57,9 +57,9 @@ public class OldEntryActivity extends SimpleActivity {
         String answer1 = "";
         String answer2 = "";
         String mc, dc, yc, mm, dm, ym, favorited;
-        String[] questionsArray = questions.split("\\r?\\n");
+        String[] questionsArray = questions.split("@@@@");
         try {
-            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
+            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("@@@@");
             while (scanner.hasNext()) {
                 String checkQuestion = scanner.next();
                 if(checkQuestion.equals(questionsArray[0])) {
@@ -104,7 +104,7 @@ public class OldEntryActivity extends SimpleActivity {
 
     //Splits parameter string into two by new line
     private String[] splitLineHelper(String line) {
-        String[] QAndA = line.split("\\r?\\n");
+        String[] QAndA = line.split("@@@@");
         return QAndA;
     }
 
@@ -120,17 +120,18 @@ public class OldEntryActivity extends SimpleActivity {
         for (int i = 0; i < questionsArraylist.size(); i++) {
             if (splitLineHelper(questionsArraylist.get(i))[0].equals(question)) {
                 //Changing date modified to today
-                thoughtsArraylist.set(i, question + "\t" + newAnswer + "\n" + question2 + "\t" + newAnswer2
-                        + "\n" + mc + "\t" + dc + "\t" + yc + "\t"
-                        + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
+                thoughtsArraylist.set(i, question + "@@@@" + newAnswer + "@@@@" + question2 + "@@@@" + newAnswer2
+                        + "@@@@" + mc + "@@@@" + dc + "@@@@" + yc + "@@@@"
+                        + mm + "@@@@" + dm + "@@@@" + ym + "@@@@" + favorited);
                 break;
             }
         }
         for (int i = 0; i < thoughtsArraylist.size(); i++) {
-            writer.println(thoughtsArraylist.get(i));
+            writer.print(thoughtsArraylist.get(i) + "@@@@");
         }
         writer.close();
     }
+    //TODO: make the last word of a line have a delimiter too
 
     //Returns list of entries
     private List<String> getList() {
@@ -139,7 +140,7 @@ public class OldEntryActivity extends SimpleActivity {
         String mc, dc, yc,
                 mm, dm, ym, favorited;
         try {
-            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
+            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("@@@@");
             while (scanner.hasNext()) {
                 q1 = scanner.next();
                 a1 = scanner.next();
@@ -152,9 +153,9 @@ public class OldEntryActivity extends SimpleActivity {
                 dm = scanner.next();
                 ym = scanner.next();
                 favorited = scanner.next();
-                thoughtArraylist.add(q1 + "\t" + a1 + "\n" + q2 + "\t" + a2 + "\n"
-                        + mc + "\t" + dc + "\t" + yc + "\t"
-                        + mm + "\t" + dm + "\t" + ym + "\t" + favorited);
+                thoughtArraylist.add(q1 + "@@@@" + a1 + "@@@@" + q2 + "@@@@" + a2 + "@@@@"
+                        + mc + "@@@@" + dc + "@@@@" + yc + "@@@@"
+                        + mm + "@@@@" + dm + "@@@@" + ym + "@@@@" + favorited);
             }
         } catch (Exception e) {
             // do nothing
@@ -169,7 +170,7 @@ public class OldEntryActivity extends SimpleActivity {
         String mc, dc, yc,
                 mm, dm, ym, favorited;
         try {
-            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("\\t|\\n");
+            Scanner scanner = new Scanner(openFileInput("thoughtsList.txt")).useDelimiter("@@@@");
             while (scanner.hasNext()) {
                 q1 = scanner.next();
                 a1 = scanner.next();
@@ -182,7 +183,7 @@ public class OldEntryActivity extends SimpleActivity {
                 dm = scanner.next();
                 ym = scanner.next();
                 favorited = scanner.next();
-                thoughtArraylist.add(q1 + "\n" + q2);
+                thoughtArraylist.add(q1 + "@@@@" + q2);
             }
         } catch (Exception e) {
             // do nothing
